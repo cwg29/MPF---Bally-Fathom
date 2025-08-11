@@ -1,0 +1,173 @@
+#config_version=5
+##! mode: spinner
+
+#FATHOM
+
+### I. SPINNER FEATURE
+# The spinner scores 1,000 to 5,000 when lit.  Hitting right target lites spinnet roscore 5,000
+
+mode:
+  start_events: start_mode_spinner
+  stop_events: stop_mode_spinner
+  priority: 700
+
+show_player:  
+  spinner_fathom_spinner_hit:
+    spinner_light_show:
+      loops: 10
+      speed: 10
+      priority: 10
+    spinner_segment_display:
+      loops: 10
+      speed: 1
+      priority: 2
+      
+# in a game mode the player needs to spin the spinner 10 times
+counters:
+  spinner_rotations:
+    count_events: spinner_fathom_spinner_hit
+    count_complete_value: 7
+    #disable_events: timer_timer_down_slipstream_started, timer_timer_down_inner_slipstream_started
+    #enable_events: timer_timer_down_slipstream_complete, timer_timer_down_inner_slipstream_complete
+    events_when_complete: spinner_spun_up_finished
+    restart_events: spinner_fathom_spinner_idle
+    
+  #spinner_trg_counter:
+    #count_events: standup_target_shot_hit
+    #count_complete_value: 2
+    #disable_events: timer_timer_down_slipstream_started
+    #enable_events: timer_timer_down_slipstream_complete
+    #events_when_complete: spinner_trg_done
+    #restart_events: ball_starting
+    
+shots:
+  standup_target_shot:
+    switch: s_right_standup_target
+    #enable_events: mode_ball_starting_show_ended
+    #disable_events: start_ball_starting_show
+    profile: flash_profile
+
+timers:    
+  timer_down_spinner_shot_video:
+        start_value: 10
+        end_value: 0
+        direction: down
+        tick_interval: 1s
+        start_running: no
+        control_events:
+            - action: start
+              event: slide_spinner_slide_active
+            - action: reset
+              event: timer_timer_down_spinner_shot_video_complete
+  timer_down_spinner_bonus_shot_video:
+        start_value: 5
+        end_value: 0
+        direction: down
+        tick_interval: 1s
+        start_running: no
+        control_events:
+            - action: start
+              event: spinner_fathom_spinner_hit{current_player.pf_spinner_multiplier==5}
+            - action: reset
+              event: timer_timer_down_spinner_bonus_shot_video_complete
+              
+  timer_down_spinner_eb_video:
+        start_value: 5
+        end_value: 0
+        direction: down
+        tick_interval: 1s
+        start_running: no
+        control_events:
+            - action: start
+              event: slide_extra_ball_hit_active
+            - action: reset
+              event: timer_timer_down_spinner_eb_video_complete
+
+light_player:
+  standup_target_shot_hit:
+        led_spinner:  # standup target hit and score now 5000
+            color: red 
+            fade: 500ms    
+    
+variable_player:
+
+  mode_spinner_started:
+    pf_spinner_multiplier:
+      int: 1
+      action: set
+     
+  standup_target_shot_hit:
+    pf_spinner_multiplier:
+      int: 5
+      action: set  
+      
+  spinner_fathom_spinner_hit:
+    score: 1000 * current_player.pf_spinner_multiplier
+    
+#sequences:
+#  spinner_seq:
+#    restart_events: left_blue_trap_release_set
+#    persist_state: true
+#    start_enabled: true
+#    events:
+#      - lagoon_trap_ready_to_be_set
+#      - standup_target_shot_hit
+
+slide_player:
+  standup_target_shot_hit:
+    spinner_slide:
+      expire: 11s #spinner bonus
+  timer_timer_down_spinner_shot_video_complete:
+    spinner_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+  timer_timer_down_spinner_bonus_shot_video_started:
+    spinner_bonus_slide:
+      expire: 6s #spinner bonus
+  timer_timer_down_spinner_bonus_shot_video_complete:
+    spinner_bonus_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+        
+slides:
+  spinner_slide:
+#    - type: text
+ #     font_name: ancienttext
+#      color: red
+#      text: Energy Level!
+#      font_size: 100
+#      expire: 5s
+#      y: 40
+#      anchor_y: bottom
+ #     z: 5
+    - type: video
+      video: spinner_video
+      height: 720
+      width: 1280
+      z: 10
+      expire: 10s  
+  spinner_bonus_slide:
+    - type: text
+      font_name: bobbithehippie
+      color: red
+      text: Bonus!
+      font_size: 70
+      expire: 1500ms
+      x: center
+      y: top-80
+      z: 13
+    - type: video
+      video: spinner_bonus_video
+      height: 720
+      width: 1280
+      z: 11
+      expire: 10s          
+      
+sound_player:
+  spinner_fathom_spinner_hit{current_player.pf_spinner_multiplier==1}: spinner_sound
+  spinner_fathom_spinner_hit{current_player.pf_spinner_multiplier==5}: spinner_bonus_sound
+  

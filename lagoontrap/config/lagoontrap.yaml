@@ -1,0 +1,305 @@
+#config_version=5
+##! mode: lagoontrap
+
+#FATHOM
+
+mode:
+  start_events: start_mode_lagoontrap
+  stop_events: stop_mode_lagoontrap
+  priority: 300
+  
+event_player:
+  mode_lagoontrap_started: initialize_lagoontrap
+  ball_starting{ball==1}: lagoon_trap_initialize
+  multiball_lock_lagoon_trap_full: lagoon_trap_ready_to_be_set, lagoon_trap_stage_1_complete
+  lagoon_trap_open_shot_on_complete: lagoon_trap_open
+  logicblock_lagoon_drop_seq_3_complete: lagoon_trap_open
+  timer_lagoon_trap_start_escape_timer_complete: blue_multiball_release_ready
+  timer_lagoon_trap_multiball_show_timer_complete: reset_lagoon_trap 
+  
+  
+
+
+multiball_locks:
+  lagoon_trap:
+    balls_to_lock: 1
+    lock_devices: bd_top_saucer
+    enable_events: initialize_lagoontrap, ball_starting
+    disable_events: lagoon_trap_multiball_complete
+    reset_all_counts_events: reset_lagoon_trap
+    reset_count_for_current_player_events: timer_lagoon_trap_multiball_show_timer_complete
+    #locked_ball_counting_strategy: physical_only
+    
+sequences:
+  lagoon_drop_seq:
+    restart_events: left_blue_trap_release_set
+    persist_state: true
+    start_enabled: true
+    events:
+      - lagoon_trap_ready_to_be_set
+      - drop_blue_3x_shot_hit
+      
+  lagoon_drop_seq_2:
+    restart_events: left_blue_trap_release_set
+    persist_state: true
+    start_enabled: true
+    events:
+      - logicblock_lagoon_drop_seq_complete
+      - drop_blue_plus1x_shot_hit
+      
+  lagoon_drop_seq_3:
+    restart_events: left_blue_trap_release_set
+    persist_state: true
+    start_enabled: true
+    events:
+      - logicblock_lagoon_drop_seq_2_complete
+      - drop_blue_plus1x_shot_hit
+
+timers:
+  lagoon_trap_lower_drop_timer: # drop targets raise and lower is staggered
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: lagoon_trap_initialize
+      - action: reset
+        event: timer_lagoon_trap_lower_drop_timer_complete
+        
+  lagoon_trap_lower_drop_timer4: # drop targets raise and lower is staggered
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: timer_lagoon_trap_multiball_show_timer_complete
+      - action: reset
+        event: timer_lagoon_trap_lower_drop_timer4_complete
+
+  lagoon_trap_raise_drop_timer:  # drop targets raise and lower is staggered
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: lagoon_trap_ready_to_be_set
+      - action: reset
+        event: timer_lagoon_trap_rasie_drop_timer_complete
+        
+  lagoon_trap_video_timer:  # to stop video
+    start_value: 5
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: lagoon_trap_ready_to_be_set
+      - action: reset
+        event: timer_lagoon_trap_video_timer_complete
+        
+  lagoon_trap_start_escape_timer:  # a short pause before releasing the locked ball
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: lagoon_trap_multiball_complete  #green_plus1x_5x_mltpr
+      - action: reset
+        event: timer_lagoon_trap_start_escape_timer_complete
+
+  lagoon_trap_multiball_show_timer:  # time that multiball will be active
+    start_value: 1
+    end_value: 20
+    direction: up
+    tick_interval: 1s    
+    control_events:
+      - action: start
+        event: timer_lagoon_trap_start_escape_timer_complete
+      - action: reset
+        event: timer_lagoon_trap_multiball_show_timer_complete
+        
+  lagoon_trap_mltplr_trg_timer:  # reset multiplier targets after ball escape
+    start_value: 1
+    end_value: 4
+    direction: up
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: timer_lagoon_trap_start_escape_timer_complete
+      - action: reset
+        event: timer_lagoon_trap_mltplr_trg_timer_complete
+        
+
+coil_player:
+  lagoon_trap_initialize: c_drop_target_blu_1X_drop
+  timer_lagoon_trap_left_drop_timer_complete: c_drop_target_blu_3X_drop
+  timer_lagoon_trap_left_drop_timer2_complete: c_drop_target_blu_1X_drop
+  timer_lagoon_trap_left_drop_timer3_complete: c_drop_target_blu_1X_drop
+  timer_lagoon_trap_lower_drop_timer_complete: c_drop_target_blu_3X_drop  
+  lagoon_trap_ready_to_be_set: c_drop_target_blu_1X
+  timer_lagoon_trap_raise_drop_timer_complete: c_drop_target_blu_3X
+  #timer_lagoon_trap_mltplr_trg_timer_complete: c_drop_target_blu_1X
+  #timer_lagoon_trap_left_drop_timer4_complete: c_drop_target_blu_3X
+  
+shots:
+  blu_drop_target_3x:
+    switch: s_blu_drop_target_3x
+    profile: flash_profile
+
+  blu_drop_target_plus1x:
+    switch: s_blu_drop_target_plus1x
+    profile: flash_profile
+
+shot_groups:
+  lagoon_trap_open_shot:
+    shots: blu_drop_target_3x, blu_drop_target_plus1x
+    reset_events:
+      lagoon_trap_open_shot_on_complete: 2s
+
+light_player:
+  lagoon_trap_ready_to_be_set:
+    led_lf_blu_arrow:
+      priority: 4
+      color: blue
+      fade: 500ms
+  ball_starting{current_player.ball>=2}:
+    led_lf_blu_arrow:
+      priority: 1
+      color: blue
+      fade: 500ms
+  timer_lagoon_trap_start_escape_timer_complete:
+    led_lf_blu_arrow:
+      priority: 4
+      color: off
+      fade: 500ms
+  lagoon_trap_multiball_complete:
+    led_ctr_trip_wlit:
+      color: yellow
+      fade: 500ms
+      
+
+  timer_lagoon_trap_multiball_show_timer_complete:
+    led_lf_blu_arrow:
+      color: off
+      fade: 500ms
+    #gi:
+      #color: white
+      #fade: 500ms
+    #bb_gi:
+      #color: white
+      #fade: 500ms
+
+show_player:
+
+  lagoon_trap_ready_to_be_set: # gi light show when ball locked
+    gi_backbox_flash_show:
+      loops: 4
+      speed: 12
+      
+  lagoon_trap_ready_to_be_set.1:
+    lagoon_trap_segment_display:
+      loops: 3
+      speed: 1
+      priority: 2
+      
+  #shoot_cave_trap_stage_1: # flash arrow "to release ball"  ### IN AWARDS ####
+    #color_cycle_show:
+      #loops: -1
+      #speed: 10
+      #priority: 3
+      #show_tokens:
+        #led: led_lf_blu_arrow
+        #color1: blue
+        #color2: off
+        
+  lagoon_trap_ready_to_be_set.2:
+    color_cycle_show:
+      loops: 3
+      speed: 10
+      priority: 10
+      show_tokens:
+        led: led_lf_blu_arrow
+        color1: red
+        color2: blue
+        
+  blu_drop_target_3x_hit:
+    color_cycle_show:
+      loops: 3
+      speed: 10
+      priority: 10
+      show_tokens:
+        led: led_lf_blu_arrow
+        color1: red
+        color2: blue
+
+  blu_drop_target_plus1x_hit:
+    color_cycle_show:
+      loops: 3
+      speed: 10
+      priority: 11
+      show_tokens:
+        led: led_lf_blu_arrow
+        color1: red
+        color2: blue
+        
+  timer_lagoon_trap_multiball_show_timer_started:
+    color_cycle_show:
+      loops: -1
+      speed: 4
+      priority: 12
+      show_tokens:
+        led: led_lf_blu_arrow
+        color1: red
+        color2: blue
+    gi_backbox_cycle_show_3:  # gi show during multiball
+      loops: -1
+      speed: 30
+      
+  timer_lagoon_trap_multiball_show_timer_complete:
+    color_cycle_show:
+      action: stop
+    gi_backbox_cycle_show_3:
+      action: stop
+
+  timer_lagoon_trap_start_escape_timer_started: # gi light show to get ready for ball escape from lagoon
+    gi_backbox_flash_show:
+      loops: 20
+      speed: 44
+      
+  timer_lagoon_trap_start_escape_timer_complete:
+    color_cycle_show:
+      action: stop
+        
+slide_player:
+  lagoon_trap_ready_to_be_set:
+    lagoon_trap_slide:
+      expire: 7s #ball captured
+  timer_lagoon_trap_video_timer_complete:
+    lagoon_trap_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+        
+slides:
+  lagoon_trap_slide:
+#    - type: text
+ #     font_name: ancienttext
+#      color: red
+#      text: Energy Level!
+#      font_size: 100
+#      expire: 5s
+#      y: 40
+#      anchor_y: bottom
+ #     z: 5
+    - type: video
+      video: cave_trap_video
+      height: 720
+      width: 1280
+      z: 10
+      expire: 5s
+        

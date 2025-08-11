@@ -1,0 +1,138 @@
+#config_version=5
+##! mode: star_lane
+
+#FATHOM
+
+mode:
+  start_events: start_mode_star_lane
+  stop_events: stop_mode_star_lane
+  priority: 900
+  
+ 
+event_player:
+  mode_greenbonus_started: initialize_star_lane
+   
+  
+shots:
+  star_1_shot:
+    switch: s_left_star_1
+    enable_events: mode_ball_starting_show_ended
+    disable_events: start_ball_starting_show
+    profile: flash_profile
+    
+  star_2_shot:
+    switch: s_left_star_2
+    enable_events: mode_ball_starting_show_ended
+    disable_events: start_ball_starting_show
+    profile: flash_profile
+    
+  star_3_shot:
+    switch: s_left_star_3
+    enable_events: mode_ball_starting_show_ended
+    disable_events: start_ball_starting_show
+    profile: flash_profile
+    
+  star_4_shot:
+    switch: s_right_star_1
+    enable_events: mode_ball_starting_show_ended
+    disable_events: start_ball_starting_show
+    profile: flash_profile
+    
+  star_5_shot:
+    switch: s_right_star_2
+    enable_events: mode_ball_starting_show_ended
+    disable_events: start_ball_starting_show
+    profile: flash_profile
+    
+    
+variable_player:
+      
+  star_1_shot_hit:
+    score: 100  * current_player.blue_3x_bonus_pf_multiplier * current_player.green_3x_bonus_pf_multiplier
+  
+  star_2_shot_hit:
+    score: 100  * current_player.blue_3x_bonus_pf_multiplier * current_player.green_3x_bonus_pf_multiplier
+    
+  star_3_shot_hit:
+    score: 100  * current_player.blue_3x_bonus_pf_multiplier * current_player.green_3x_bonus_pf_multiplier
+  
+  star_4_shot_hit:
+    score: 100  * current_player.blue_3x_bonus_pf_multiplier * current_player.green_3x_bonus_pf_multiplier
+    
+  star_5_shot_hit:
+    score: 100  * current_player.blue_3x_bonus_pf_multiplier * current_player.green_3x_bonus_pf_multiplier
+  
+shows:
+  star_cycle_show:
+    - time: 0
+      lights:
+        led_lf_star_1: green-f400ms
+    - time: +1
+      lights:
+        led_lf_star_1: off-f400ms
+        led_lf_star_2: green-f400ms
+    - time: +1
+      lights:
+        led_lf_star_2: off-f400ms
+        led_lf_star_3: green-f400ms    
+    - time: +1
+      lights:
+        led_lf_star_3: off-f400ms
+        led_rt_star_1: green-f400ms
+    - time: +1
+      lights:
+        led_rt_star_1: off-f400ms
+        led_rt_star_2: green-f400ms
+    - time: +1
+      lights:
+        led_rt_star_2: off-f400ms    
+    - time: +1 
+    
+show_player:
+
+  mode_star_lane_started:
+    star_cycle_show:
+      loops: -1
+      speed: 4
+      
+  star_1_shot_hit:
+    color_cycle_show:
+      loops: 5
+      speed: 9
+      show_tokens:
+        led: led_lf_star_1
+        color1: blue
+        color2: green
+  star_2_shot_hit:
+    color_cycle_show:
+      loops: 5
+      speed: 9
+      show_tokens:
+        led: led_lf_star_2
+        color1: blue
+        color2: green
+  star_3_shot_hit:
+    color_cycle_show:
+      loops: 5
+      speed: 9
+      show_tokens:
+        led: led_lf_star_3
+        color1: blue
+        color2: green
+  star_4_shot_hit:
+    color_cycle_show:
+      loops: 5
+      speed: 9
+      show_tokens:
+        led: led_rt_star_1
+        color1: blue
+        color2: green
+  star_5_shot_hit:
+    color_cycle_show:
+      loops: 5
+      speed: 9
+      show_tokens:
+        led: led_rt_star_2
+        color1: blue
+        color2: green
+    

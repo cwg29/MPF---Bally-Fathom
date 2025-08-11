@@ -1,0 +1,254 @@
+#config_version=5
+##! mode: popbmpr
+
+#FATHOM
+
+mode:
+  start_events: start_mode_popbmpr
+  stop_events: stop_mode_popbmpr
+  priority: 200
+  
+event_player:
+  mode_popbmpr_started: initialize_popbmpr
+  pop_bumper_count_done{count==1}: blue_adv_bonus_active
+  pop_bumper_count_done{count==2}: green_adv_bonus_active
+  pop_bumper_count_done{count==3}: pop_bumper_count_start
+  
+  
+counters:
+  pop_bumper_count:
+    count_events: initialize_popbmpr, pop_bumper_count_complete, pop_bumper_count_start, left_pop_bumper_score_change_on_complete, right_pop_bumper_score_change_on_complete, lower_pop_bumper_score_change_on_complete 
+    events_when_hit: pop_bumper_count_done
+    starting_count: 0
+    direction: up
+    count_complete_value: 3
+    reset_on_complete: true
+    persist_state: true
+    start_enabled: true
+    disable_on_complete: false
+    restart_events: pop_bumper_count_complete
+  
+shot_groups:
+  pop_bumper_score_change:
+    shots: left_pop_bumper, right_pop_bumper, lower_pop_bumper
+    reset_events:
+      pop_bumper_score_change_on_complete: 200ms
+  left_pop_bumper_score_change:
+    shots: left_pop_bumper
+    reset_events:
+      left_pop_bumper_score_change_on_complete: 200ms
+  right_pop_bumper_score_change:
+    shots: right_pop_bumper
+    reset_events:
+      right_pop_bumper_score_change_on_complete: 200ms
+  lower_pop_bumper_score_change:
+    shots: lower_pop_bumper
+    reset_events:
+      lower_pop_bumper_score_change_on_complete: 200ms
+      
+shots:
+  left_pop_bumper:
+    switch: s_left_pop_bumper
+    profile: flash_profile
+
+  right_pop_bumper:
+    switch: s_right_pop_bumper
+    profile: flash_profile
+    
+  lower_pop_bumper:
+    switch: s_lower_pop_bumper
+    profile: flash_profile
+    
+shot_profiles:
+  flash_profile:
+    states:
+      - name: off
+        show: off
+      - name: on
+        show: on
+        
+timers:    
+  pop_1_timer:
+        start_value: 1
+        end_value: 0
+        direction: down
+        tick_interval: 1250ms
+        start_running: no
+        control_events:
+            - action: start
+              event: slide_pop_1_slide_active
+            - action: reset
+              event: timer_pop_1_timer_complete
+  pop_2_timer:
+        start_value: 1
+        end_value: 0
+        direction: down
+        tick_interval: 1250ms
+        start_running: no
+        control_events:
+            - action: start
+              event: slide_pop_2_slide_active
+            - action: reset
+              event: timer_pop_2_timer_complete
+  pop_3_timer:
+        start_value: 1
+        end_value: 0
+        direction: down
+        tick_interval: 1250ms
+        start_running: no
+        control_events:
+            - action: start
+              event: slide_pop_3_slide_active
+            - action: reset
+              event: timer_pop_3_timer_complete
+        
+show_player:
+  mode_popbmpr_started:
+    color_cycle_pop_show:
+      loops: -1
+      speed: 1
+      priority: 10
+      show_tokens:
+        led1: led_lf_pop
+        led2: led_ctr_pop
+        led3: led_rt_pop
+        color1: green
+        color2: red
+        color3: off
+        
+  s_left_pop_bumper_active:
+    color_cycle_show:
+      loops: 1
+      speed: 10
+      priority: 20
+      show_tokens:
+        led: led_lf_pop  #led_lf_pop
+        color1: white
+        color2: blue
+  s_right_pop_bumper_active:
+    color_cycle_show:
+      loops: 1
+      speed: 10
+      priority: 20
+      show_tokens:
+        led: led_rt_pop  #led_rt_pop
+        color1: white
+        color2: blue
+  s_lower_pop_bumper_active:
+    color_cycle_show:
+      loops: 1
+      speed: 10
+      priority: 20
+      show_tokens:
+        led: led_ctr_pop  #led_rt_pop
+        color1: white
+        color2: blue
+        
+light_player:
+  green_adv_bonus_active:
+        led_ctr_adv_bns_lf:  #led_ctr_adv_bns_lf, l_led43
+            color: blue
+            fade: 500ms
+        led_ctr_adv_bns_rt:  #led_ctr_adv_bns_rt, l_led41
+            color: off
+            fade: 500ms
+            
+        led_adv_bns_2:  #led_ctr_adv_bns_lf, l_led43
+            color: blue
+            fade: 500ms
+        led_adv_bns_1:  #led_ctr_adv_bns_rt, l_led41
+            color: off
+            fade: 500ms
+            
+  blue_adv_bonus_active:
+        led_ctr_adv_bns_rt:  #by standup target
+            color: green
+            fade: 500ms
+        led_ctr_adv_bns_lf:  #by standup target
+            color: off
+            fade: 500ms
+            
+        led_adv_bns_1:  #by standup target
+            color: green
+            fade: 500ms
+        led_adv_bns_2:  #by standup target
+            color: off
+            fade: 500ms
+  
+              
+variable_player:
+  green_adv_bonus_active:
+    green_adv_bonus_scoring:
+      int: 1
+      action: set
+    blue_adv_bonus_scoring:
+      int: 0
+      action: set
+  blue_adv_bonus_active:
+    green_adv_bonus_scoring:
+      int: 0
+      action: set
+    blue_adv_bonus_scoring:
+      int: 1
+      action: set
+      
+  left_pop_bumper_hit:
+    score: 100 * current_player.blue_3x_bonus_pf_multiplier * current_player.green_3x_bonus_pf_multiplier
+  right_pop_bumper_hit:
+    score: 100 * current_player.blue_3x_bonus_pf_multiplier * current_player.green_3x_bonus_pf_multiplier
+  lower_pop_bumper_hit:
+    score: 100 * current_player.blue_3x_bonus_pf_multiplier * current_player.green_3x_bonus_pf_multiplier
+    
+    
+    
+slide_player:
+  s_left_pop_bumper_active:
+    pop_1_slide:
+      expire: 2s
+  timer_pop_1_timer_complete:
+    pop_1_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 250ms
+  s_right_pop_bumper_active:
+    pop_2_slide:
+      expire: 2s
+  timer_pop_2_timer_complete:
+    pop_2_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 250ms
+  s_lower_pop_bumper_active:
+    pop_3_slide:
+      expire: 2s
+  timer_pop_3_timer_complete:
+    pop_3_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 250ms
+            
+slides:
+  pop_1_slide:
+    - type: video
+      video: pop_1_video
+      width: 1280
+      height: 720
+      z: 11
+      expire: 2s
+  pop_2_slide:
+    - type: video
+      video: pop_2_video
+      width: 1280
+      height: 720
+      z: 12
+      expire: 2s
+  pop_3_slide:
+    - type: video
+      video: pop_3_video
+      width: 1280
+      height: 720
+      z: 15
+      expire: 2s    

@@ -1,0 +1,246 @@
+#config_version=5
+##! mode: bonus_collect
+
+#FATHOM
+
+mode:
+  start_events: start_mode_bonus_collect
+  stop_events: stop_mode_bonus_collect
+  priority: 500
+  
+event_player:
+  mode_bonus_started: initialize_bonus_collect
+  s_left_drop1_target_1_active: blue_count_up
+  s_left_drop1_target_3_active: blue_count_up
+  s_left_drop2_target_2_active: blue_count_up
+  s_left_drop1_target_2_active: green_count_up
+  s_left_drop2_target_1_active: green_count_up
+  s_left_drop2_target_3_active: green_count_up
+  
+  center_drop_1_blue_ready_hit: blue_count_up
+  center_drop_1_green_ready_hit: green_count_up
+  center_drop_2_blue_ready_hit: blue_count_up
+  center_drop_2_green_ready_hit: green_count_up
+  center_drop_3_blue_ready_hit: blue_count_up
+  center_drop_3_green_ready_hit: green_count_up
+  
+  
+  green_bonus_collect_count_done{count==1}: green_adv_1_active
+  green_bonus_collect_count_done{count==2}: green_adv_2_active
+  green_bonus_collect_count_done{count==3}: green_adv_3_active
+  green_bonus_collect_count_done{count==4}: green_adv_4_active
+  green_bonus_collect_count_done{count==5}: green_adv_5_active
+  green_bonus_collect_count_done{count==6}: green_adv_6_active
+  green_bonus_collect_count_done{count==7}: green_adv_7_active
+  green_bonus_collect_count_done{count==8}: green_adv_8_active
+  green_bonus_collect_count_done{count==9}: green_adv_9_active
+  green_bonus_collect_count_done{count==10}: green_adv_10_active
+  green_bonus_collect_count_done{count==11}: green_adv_50_active
+  
+  blue_bonus_collect_count_done{count==1}: blue_adv_1_active
+  blue_bonus_collect_count_done{count==2}: blue_adv_2_active
+  blue_bonus_collect_count_done{count==3}: blue_adv_3_active
+  blue_bonus_collect_count_done{count==4}: blue_adv_4_active
+  blue_bonus_collect_count_done{count==5}: blue_adv_5_active
+  blue_bonus_collect_count_done{count==6}: blue_adv_6_active
+  blue_bonus_collect_count_done{count==7}: blue_adv_7_active
+  blue_bonus_collect_count_done{count==8}: blue_adv_8_active
+  blue_bonus_collect_count_done{count==9}: blue_adv_9_active
+  blue_bonus_collect_count_done{count==10}: blue_adv_10_active
+  blue_bonus_collect_count_done{count==11}: blue_adv_50_active
+  
+### Center drop targets and standup target only score a bonus based on which adv light is lit  ###
+
+shots:
+  center_drop_1_blu:
+    switch: s_ctr_drop_target_1
+    profile: flash_profile
+  center_drop_2_blu:
+    switch: s_ctr_drop_target_2
+    profile: flash_profile
+  center_drop_3_blu:
+    switch: s_ctr_drop_target_3
+    profile: flash_profile
+    
+  center_drop_1_grn:
+    switch: s_ctr_drop_target_1
+    profile: flash_profile
+  center_drop_2_grn:
+    switch: s_ctr_drop_target_2
+    profile: flash_profile
+  center_drop_3_grn:
+    switch: s_ctr_drop_target_3
+    profile: flash_profile
+    
+
+shot_groups:
+  center_drop_1_blue_ready:
+    shots: center_drop_1_blu
+    enable_events: blue_adv_bonus_active
+    disable_events: green_adv_bonus_active
+    reset_events:
+      center_drop_1_blue_ready_on_complete: 200ms
+      
+  center_drop_1_green_ready:
+    shots: center_drop_1_grn
+    enable_events: green_adv_bonus_active
+    disable_events: blue_adv_bonus_active
+    reset_events:
+      center_drop_1_green_ready_on_complete: 200ms
+      
+  center_drop_2_blue_ready:
+    shots: center_drop_2_blu
+    enable_events: green_adv_bonus_active
+    disable_events: blue_adv_bonus_active
+    reset_events:
+      center_drop_2_blue_ready_on_complete: 200ms
+      
+  center_drop_2_green_ready:
+    shots: center_drop_2_grn
+    enable_events: blue_adv_bonus_active
+    disable_events: green_adv_bonus_active
+    reset_events:
+      center_drop_2_green_ready_on_complete: 200ms
+      
+  center_drop_3_blue_ready:
+    shots: center_drop_3_blu
+    enable_events: green_adv_bonus_active
+    disable_events: blue_adv_bonus_active
+    reset_events:
+      center_drop_3_blue_ready_on_complete: 200ms
+      
+  center_drop_3_green_ready:
+    shots: center_drop_3_grn
+    enable_events: blue_adv_bonus_active
+    disable_events: green_adv_bonus_active
+    reset_events:
+      center_drop_3_green_ready_on_complete: 200ms
+  
+  
+  
+counters:
+  green_bonus_collect_count:
+    count_events: green_count_up 
+    events_when_hit: green_bonus_collect_count_done
+    starting_count: 0
+    direction: up
+    count_complete_value: 12
+    reset_on_complete: true
+    persist_state: false
+    start_enabled: true
+    disable_on_complete: false
+    restart_events: green_bonus_count_down_count_complete
+    
+  blue_bonus_collect_count:
+    count_events: blue_count_up
+    events_when_hit: blue_bonus_collect_count_done
+    starting_count: 0
+    direction: up
+    count_complete_value: 12
+    reset_on_complete: true
+    persist_state: false
+    start_enabled: true
+    disable_on_complete: false
+    restart_events: blue_bonus_count_down_count_complete
+    
+light_player:
+  green_adv_1_active:
+        led_grn_1:
+            color: green
+            fade: 300ms
+  green_adv_2_active:
+        led_grn_2:
+            color: green
+            fade: 300ms
+  green_adv_3_active:
+        led_grn_3:
+            color: green
+            fade: 300ms
+  green_adv_4_active:
+        led_grn_4:
+            color: green
+            fade: 300ms
+  green_adv_5_active:
+        led_grn_5:
+            color: green
+            fade: 300ms
+  green_adv_6_active:
+        led_grn_6:
+            color: green
+            fade: 300ms
+  green_adv_7_active:
+        led_grn_7:
+            color: green
+            fade: 300ms
+  green_adv_8_active:
+        led_grn_8:
+            color: green
+            fade: 300ms
+  green_adv_9_active:
+        led_grn_9:
+            color: green
+            fade: 300ms
+  green_adv_10_active:
+        led_grn_10:
+            color: green
+            fade: 300ms
+  green_adv_50_active:
+        led_grn_50:
+            color: green
+            fade: 300ms
+            
+  blue_adv_1_active:
+        led_blu_1:
+            color: blue
+            fade: 300ms
+  blue_adv_2_active:
+        led_blu_2:
+            color: blue
+            fade: 300ms
+  blue_adv_3_active:
+        led_blu_3:
+            color: blue
+            fade: 300ms
+  blue_adv_4_active:
+        led_blu_4:
+            color: blue
+            fade: 300ms
+  blue_adv_5_active:
+        led_blu_5:
+            color: blue
+            fade: 300ms
+  blue_adv_6_active:
+        led_blu_6:
+            color: blue
+            fade: 300ms
+  blue_adv_7_active:
+        led_blu_7:
+            color: blue
+            fade: 300ms
+  blue_adv_8_active:
+        led_blu_8:
+            color: blue
+            fade: 300ms
+  blue_adv_9_active:
+        led_blu_9:
+            color: blue
+            fade: 300ms
+  blue_adv_10_active:
+        led_blu_10:
+            color: blue
+            fade: 300ms
+  blue_adv_50_active:
+        led_blu_50:
+            color: blue
+            fade: 300ms
+  
+  
+variable_player:
+  mode_bonus_collect_started:
+    blue_bns_multiplier:
+      int: 1
+      action: set
+    green_bns_multiplier:
+      int: 1
+      action: set
+    

@@ -1,0 +1,415 @@
+#config_version=5
+##! mode: lane_change
+# in modes/lane_change
+
+mode:
+  start_events: start_mode_lane_change
+  stop_events: stop_mode_lane_change
+  priority: 225
+  
+event_player:
+  mode_lane_change_started: initialize_abc_lanes
+  abc_lanes_done{count==1}: stage_1_abc_lanes_complete   # arrows lit
+  abc_lanes_done{count==2}: stage_2_abc_lanes_complete  # special lit - shoot multiball
+  abc_lanes_done{count==3}: stage_3_abc_lanes_complete   #abc special lit - multiball
+  abc_lanes_done{count==4}: stage_4_abc_lanes_complete  #shoot again
+
+shot_groups:
+  lane_change:
+    shots: lane_change_1, lane_change_2, lane_change_3
+    reset_events:
+      lane_change_on_complete: 3s
+    rotate_left_events: s_left_flipper_active
+    rotate_right_events: s_right_flipper_active
+
+counters:
+  lane_change_mltp_complete_count:
+    count_events: lane_change_on_complete
+    events_when_hit: abc_lanes_done
+    starting_count: 0
+    direction: up
+    persist_state: false
+
+shots:
+  lane_change_1:
+    switch: s_ro_upper_a
+    profile: lane_change_profile
+    show_tokens:
+      led: led_top_a
+  lane_change_2:
+    switch: s_ro_upper_b
+    profile: lane_change_profile
+    show_tokens:
+      led: led_top_b
+  lane_change_3:
+    switch: s_ro_upper_c
+    profile: lane_change_profile
+    show_tokens:
+      led: led_top_c
+      
+
+shot_profiles:
+  flash_quick_1:
+    states:
+      - name: off
+        show: off
+      - name: on
+        show: led_color
+        show_tokens:
+          color: orange
+        
+  lane_change_profile:
+    states:
+      - name: off
+        show: off
+      - name: on
+        show: led_color
+        show_tokens:
+          color: orange
+  return_lane_profile:
+    states:
+      - name: off
+        show: off
+      - name: on
+        show: led_color
+        show_tokens:
+          color: blue
+          
+timers:  
+  timer_lane_change_1_video:
+        start_value: 4
+        end_value: 0
+        direction: down
+        tick_interval: 1s
+        control_events:
+          - action: start
+            event: slide_lane_change_1_slide_active
+          - action: reset
+            event: timer_timer_lane_change_1_video_complete
+  timer_lane_change_2_video:
+        start_value: 4
+        end_value: 0
+        direction: down
+        tick_interval: 1s
+        control_events:
+          - action: start
+            event: slide_lane_change_2_slide_active
+          - action: reset
+            event: timer_timer_lane_change_2_video_complete
+  timer_lane_change_3_video:
+        start_value: 4
+        end_value: 0
+        direction: down
+        tick_interval: 1s
+        control_events:
+          - action: start
+            event: slide_lane_change_3_slide_active
+          - action: reset
+            event: timer_timer_lane_change_3_video_complete
+            
+  abc_multiball_start_escape_timer:  # a short pause before releasing the locked ball
+    start_value: 5
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: abc_lanes_done{count==2}  #lanes
+      - action: reset
+        event: timer_abc_multiball_start_escape_timer_complete
+
+  abc_multiball_show_timer:  # time that multiball will be active
+    start_value: 1
+    end_value: 30
+    direction: up
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: timer_abc_multiball_start_escape_timer_complete
+      - action: reset
+        event: timer_abc_multiball_show_timer_complete              
+
+#### START A MULTIBALL EVENT ON THE THIRD HIT OF THE LANE CHANGE SHOT GROUP  ####
+
+sequences:
+  lagoon_abc_release_seq:
+    persist_state: true
+    events:
+      - lagoon_trap_ready_to_be_set
+      - abc_lanes_done{count==2}
+    events_when_complete: left_blue_trap_release_set
+    
+  cave_abc_release_seq:
+    persist_state: true
+    events:
+      - cave_trap_ready_to_be_set
+      - abc_lanes_done{count==2}
+    events_when_complete: left_green_trap_release_set
+
+show_player:
+  lane_change_on_complete:
+    color_cycle_show:
+      loops: 8
+      speed: 10
+      show_tokens:
+        led: abc_lanes
+        color1: green
+        color2: lime
+  abc_lanes_done{count==1}:
+    color_cycle_show:  #return lanes 50,000 bonus
+      loops: 8
+      speed: 10
+      show_tokens:
+        led: rtn_lane_bns, abc_lanes  #outer return lane bonus - orange arrows
+        color1: green
+        color2: orange
+  abc_lanes_done{count==2}:
+    color_cycle_show:  #return lanes 50,000 bonus
+      loops: 8
+      speed: 10
+      show_tokens:
+        led: out_lane_bns, abc_lanes  #outer return lane bonus - specials - shoot multiball
+        color1: purple
+        color2: red
+  stage_2_abc_lanes_complete:
+    color_cycle_show:
+      loops: -1
+      speed: 10
+      priority: 2
+      show_tokens:
+        led: led_abc_special  # specials - shoot multiball
+        color1: off
+        color2: red
+  abc_lanes_done{count==3}:
+    color_cycle_show:  #return lanes 50,000 bonus - start multiball
+      loops: 8
+      speed: 10
+      show_tokens:
+        led: led_abc_special, abc_lanes  #abc - specials
+        color1: purple
+        color2: red
+  s_ro_left_lwr_out_active:
+    color_cycle_show:  #return lanes 50,000 bonus
+      loops: 3
+      speed: 14
+      show_tokens:
+        led: led_left_org_arrow  #outer return lane bonus - specials
+        color1: orange
+        color2: off
+  s_ro_right_lwr_out_active:
+    color_cycle_show:  #return lanes 50,000 bonus
+      loops: 3
+      speed: 14
+      show_tokens:
+        led: led_right_org_arrow  #outer return lane bonus - specials
+        color1: orange
+        color2: off
+  s_ro_left_lwr_in_active:
+    color_cycle_show:  #return lanes 50,000 bonus
+      loops: 3
+      speed: 14
+      show_tokens:
+        led: led_left_special  #outer return lane bonus - specials
+        color1: red
+        color2: off
+  s_ro_right_lwr_in_active:
+    color_cycle_show:  #return lanes 50,000 bonus
+      loops: 3
+      speed: 14
+      show_tokens:
+        led: led_right_special  #outer return lane bonus - specials
+        color1: red
+        color2: off
+        
+  timer_abc_multiball_show_timer_started:
+    color_cycle_show:
+      loops: -1
+      speed: 4
+      priority: 12
+      show_tokens:
+        led: led_right_special
+        color1: red
+        color2: blue
+    gi_backbox_cycle_show_3:  # gi show during multiball
+      loops: -1
+      speed: 30
+      
+  timer_abc_multiball_show_timer_complete:
+    color_cycle_show:
+      action: stop
+    gi_backbox_cycle_show_3:
+      action: stop
+
+  timer_abc_multiball_escape_timer_started: # gi light show to get ready for ball escape from lagoon
+    gi_backbox_flash_show:
+      loops: 20
+      speed: 44
+
+        
+light_player:
+  abc_lanes_done{count==1}:
+        rtn_lane_bns:  #outer return lane bonus - orange arrows  ##return lanes 50,000 bonus 
+            color: orange
+            fade: 500ms
+  abc_lanes_done{count==2}:
+        out_lane_bns:  #outer return lane bonus - specials  ##outer lanes 50,000 bonus 
+            color: red
+            fade: 500ms
+        led_abc_special:  #replay - shoot again bonus
+            color: red
+            fade: 500ms
+  abc_lanes_done{count==3}:
+        led_abc_special:  #replay - shoot again bonus
+            color: purple
+            fade: 500ms
+  abc_lanes_done{count==4}:
+        bb_shoot_again:  #replay - shoot again bonus
+            color: red
+            fade: 500ms
+
+variable_player:
+  lane_change_on_hit:
+    score: 100 * current_player.pf_multiplier
+  lane_change_off_hit:
+    score: 500 * current_player.pf_multiplier
+  lane_change_on_complete:
+    score: 5000 * current_player.pf_multiplier
+  mode_lane_change_started:
+    pf_multiplier:
+      int: 1
+      action: set
+    abc_bns_multiplier:
+      int: 1
+      action: set  
+    abc_bns_multiplier_2:
+      int: 1
+      action: set
+    #pf_bonus_multiplier:
+      #int: 0
+      #action: set
+  abc_lanes_done{count==1}: ##return lanes 50,000 bonus 
+    abc_bns_multiplier:
+      int: 100
+      action: set
+    score: 1000 * current_player.abc_bns_multiplier
+    pf_bonus_multiplier:
+      int: 1
+      action: set
+    bonus_return_lanes_lit: 1
+    #pf_bonus_3x_multiplier:
+      #int: 0
+      #action: set
+  abc_lanes_done{count==2}:
+    abc_bns_multiplier_2:
+      int: 100
+      action: set
+    bonus_out_lanes_lit: 1
+    score: 2000 * current_player.abc_bns_multiplier
+    pf_bonus_3x_multiplier:
+      int: 1
+      action: set
+  lane_change_complete:
+    score: 1000 * current_player.pf_multiplier
+    
+  abc_lanes_done{count==3}:
+    replay_shoot_again_lit:
+      int: 1
+      action: set
+    bonus_replay_achieved: 1
+
+  abc_lanes_done{count==4}: 
+    score: 3000 * current_player.abc_bns_multiplier
+    
+  s_ro_left_lwr_out_active:
+    score: 500 * current_player.abc_bns_multiplier
+  s_ro_right_lwr_out_active:
+    score: 500 * current_player.abc_bns_multiplier
+  s_ro_left_lwr_in_active:
+    score: 500 * current_player.abc_bns_multiplier_2
+  s_ro_right_lwr_in_active:
+    score: 500 * current_player.abc_bns_multiplier_2
+    
+
+    
+slide_player:
+  abc_lanes_done{count==1}:
+    lane_change_1_slide:
+      expire: 7s  #outlanes lit
+  timer_timer_lane_change_1_video_complete:
+    lane_change_1_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+  abc_lanes_done{count==2}:
+    lane_change_2_slide:
+      expire: 7s # innrerlanes lit
+  timer_timer_lane_change_2_video_complete:
+    lane_change_2_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+  abc_lanes_done{count==3}:
+    lane_change_3_slide:
+      expire: 7s # shoot again for multiball
+  timer_timer_lane_change_3_video_complete:
+    lane_change_3_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+  timer_abc_multiball_start_escape_timer_complete:
+    lane_change_4_slide:
+      expire: 10s #lagoon ball released
+  timer_abc_multiball_show_timer_complete:
+    lane_change_4_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+  
+
+
+slides:
+  lane_change_1_slide:
+    #- type: text
+      #font_name: ancienttext
+      #color: white
+      #text: 2X Multiplier!
+      #font_size: 90
+      #z: 16
+      #y: 40
+      #anchor_y: bottom
+      #expire: 10s
+    - type: video
+      video: lane_change_1_video
+      height: 720
+      width: 1280
+      z: 10
+      expire: 5s
+  lane_change_2_slide:
+    - type: video
+      video: lane_change_2_video
+      height: 720
+      width: 1280
+      z: 10
+      expire: 5s
+  lane_change_3_slide:
+    - type: video
+      video: lane_change_3_video
+      height: 720
+      width: 1280
+      z: 10
+      expire: 5s
+  lane_change_4_slide:  #used for all multiball video shows, abc count 3, cavetrap and lagoontrap also
+    - type: video
+      video: lane_change_4_video
+      height: 720
+      width: 1280
+      z: 10
+      end_behavior: loop
+      #expire: 5s
+  
+
+

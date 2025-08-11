@@ -1,0 +1,214 @@
+#config_version=5
+##! mode: extra_ball
+# in modes/extra_ball
+
+### H. X.BALL FEATURE 'i Knocking down 1, 2,3 targets in order lites target to score extra ball, lite flashes for period of time, if hit
+# you collect extra ball. When you start to shoot extra ball, playfield is as you left it except for A-B-C
+# routine.
+
+# 10s econds OFF: 6 seconds
+
+mode:
+  start_events: start_mode_extra_ball
+  stop_events: mode_attract_starting
+  priority: 800
+  
+event_player:
+  mode_extra_ball_started: initialize_extra_ball
+  ctr_drop_target_seq_1_2_3_achieved: start_eb_timer
+  timer_timer_down_eb_complete: eb_timer_timed_out
+  extra_ball_award_hit: extra_ball_award_achieved
+  timer_timer_down_voice_eb_complete: eb_voice_call
+  
+    
+timers:  #extra_ball_extra_ball_eb_awarded
+  timer_down_eb:
+        start_value: 25
+        end_value: 0
+        direction: down
+        tick_interval: 1s
+        control_events:
+          - action: start
+            event: start_eb_timer
+          - action: reset
+            event: timer_timer_down_eb_complete
+            
+  timer_down_voice_eb:
+        start_value: 1
+        end_value: 0
+        direction: down
+        tick_interval: 1s
+        control_events:
+          - action: start
+            event: extra_ball_award_achieved
+          - action: reset
+            event: timer_timer_down_voice_eb_complete
+            
+  timer_down_video_eb:
+        start_value: 5
+        end_value: 0
+        direction: down
+        tick_interval: 1s
+        control_events:
+          - action: start
+            event: extra_ball_award_achieved
+          - action: reset
+            event: timer_timer_down_video_eb_complete
+
+shots:
+  extra_ball_award:
+    switch: s_right_standup_target
+    enable_events: start_eb_timer
+    disable_events:
+      - eb_timer_timed_out
+      - award_extra_ball_given
+      
+show_player:
+  start_eb_timer:
+    color_cycle_show:
+      loops: -1
+      speed: 8
+      priority: 11
+      show_tokens:
+        led: led_extra_ball  #l_led69
+        color1: red
+        color2: blue
+        
+  timer_timer_down_eb_complete:
+    color_cycle_show:
+      action: stop
+      
+  extra_ball_award_achieved:
+    color_cycle_show:
+      action: stop
+        
+  extra_ball_award_hit:
+    eb_light_show:
+      loops: 3
+      speed: 60
+
+    color_cycle_show:
+      loops: 10
+      speed: 10
+      priority: 12
+      show_tokens:
+        led: led_extra_ball  #l_led69
+        color1: red
+        color2: white
+        
+  extra_ball_award_achieved.1:  # center drop sequence started
+    extra_ball_segment_display:
+      loops: 1
+      speed: 1
+      priority: 2
+        
+light_player:
+  timer_timer_down_eb_started:
+    led_extra_ball:  #l_led68
+            color: red
+            fade: 500ms
+  timer_timer_down_eb_complete:
+    led_extra_ball:  #l_led68
+            color: off
+            fade: 500ms
+  award_extra_ball_given:
+    led_extra_ball:  #l_led68
+            color: off
+            
+coil_player:
+  extra_ball_award_hit: c_knocker  
+
+  
+    
+        
+#light_player:
+#  extra_ball_lane_done{count==2}:
+#        l_led41:  #led_energy_lvl_1
+#            color: blue
+#            fade: 500ms
+
+ # extra_ball_extra_ball_eb_awarded:
+ #       led_same_player_shoot:
+ #           color: red
+ #           fade: 500ms
+ #       l_led39:  #led_extra_ball
+ #           color: yellow
+ #           fade: 500ms
+ #       l_led40:  #led_energy_lvl_2
+ #           color: lime
+ #           fade: 500ms
+ #       l_led41:  #led_energy_lvl_1
+ #           color: blue
+ #           fade: 500ms
+
+            
+variable_player:
+  s_right_standup_target_active:
+    score: 500
+  extra_ball_award_achieved:
+    score: 5000
+    
+
+    
+slide_player:
+  extra_ball_award_achieved:
+    extra_ball_hit:
+      expire: 7s
+  timer_timer_down_video_eb_complete:
+    extra_ball_hit:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+
+slides:
+  extra_ball_hit:
+#    - type: text
+ #     font_name: ancienttext
+#      color: red
+#      text: Energy Level!
+#      font_size: 100
+#      expire: 5s
+#      y: 40
+#      anchor_y: bottom
+ #     z: 5
+    - type: video
+      video: extra_ball_video
+      height: 720
+      width: 1280
+      z: 10
+      expire: 5s
+
+#  extra_ball_awarded:
+#    - type: text
+#      font_name: ancienttext
+#      color: red
+#      text: Extra Ball!
+#      font_size: 100
+ #     expire: 5s
+ #     y: 40
+#      anchor_y: bottom
+#      z: 5
+#    - type: video
+#      video: energy_level_4_video
+#      height: 768
+#      width: 1366
+#      z: 5
+#      expire: 5s
+      
+#  shoot_again_eb:
+#    - type: text
+#      font_name: ancienttext
+#      color: red
+#      text: Extra Ball - Shoot Again!
+#      font_size: 80
+#      expire: 5s
+#      y: 40
+#      anchor_y: bottom
+#      z: 5
+#    - type: video
+#      video: ball_saved_video
+#      height: 768
+#      width: 1366
+ #     z: 5
+#      expire: 5s

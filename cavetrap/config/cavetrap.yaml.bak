@@ -1,0 +1,166 @@
+#config_version=5
+##! mode: cavetrap
+
+#FATHOM
+
+mode:
+  start_events: start_mode_cavetrap
+  stop_events: stop_mode_cavetrap
+  priority: 275
+
+event_player:
+  mode_cavetrap_started: initialize_cavetrap
+  ball_starting{ball==1}: cave_trap_initialize
+  multiball_lock_cave_trap_full: cave_trap_ready_to_be_set
+  cave_trap_open_shot_on_complete: cave_trap_open
+  timer_cave_trap_start_escape_timer_complete: green_multiball_release_ready
+
+
+
+multiball_locks:
+  cave_trap:
+    balls_to_lock: 1
+    lock_devices: bd_right_saucer
+    reset_count_for_current_player_events: timer_cave_trap_multiball_show_timer_complete
+
+timers:
+  cave_trap_lower_drop_timer: # drop targets raise and lower is staggered
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: cave_trap_initialize
+      - action: reset
+        event: timer_cave_trap_lower_drop_timer_complete
+
+  cave_trap_raise_drop_timer:  # drop targets raise and lower is staggered
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: cave_trap_ready_to_be_set
+      - action: reset
+        event: timer_cave_trap_rasie_drop_timer_complete
+        
+  cave_trap_start_escape_timer:  # a short pause before releasing the locked ball
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: green_plus1x_5x_mltpr
+      - action: reset
+        event: timer_cave_trap_start_escape_timer_complete
+
+  cave_trap_multiball_show_timer:  # time that multiball will be active
+    start_value: 1
+    end_value: 20
+    direction: up
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: timer_cave_trap_start_escape_timer_complete
+      - action: reset
+        event: timer_cave_trap_multiball_show_timer_complete
+
+
+coil_player:
+  cave_trap_initialize: c_drop_target_grn_1X_drop
+  timer_cave_trap_lower_drop_timer_complete: c_drop_target_grn_3X_drop
+  cave_trap_ready_to_be_set: c_drop_target_grn_1X
+  timer_cave_trap_raise_drop_timer_complete: c_drop_target_grn_3X
+
+shots:
+  grn_drop_target_3x:
+    switch: s_grn_drop_target_3x
+    profile: flash_profile
+
+  grn_drop_target_plus1x:
+    switch: s_grn_drop_target_plus1x
+    profile: flash_profile
+
+shot_groups:
+  cave_trap_open_shot:
+    shots: grn_drop_target_3x, grn_drop_target_plus1x
+    reset_events:
+      cave_trap_open_shot_on_complete: 2s
+
+light_player:
+  cave_trap_open:
+    led_rt_grn_arrow:
+      color: green
+      fade: 500ms
+      
+
+  timer_cave_trap_multiball_show_timer_complete:
+    led_rt_grn_arrow:
+      color: off
+      fade: 500ms
+    #gi:
+      #color: white
+      #fade: 500ms
+    #bb_gi:
+      #color: white
+      #fade: 500ms
+
+show_player:
+
+  cave_trap_ready_to_be_set: # gi light show when ball locked
+    gi_backbox_flash_show:
+      loops: 4
+      speed: 12
+
+  s_grn_drop_target_3x_active:
+    color_cycle_show:
+      loops: 2
+      speed: 10
+      priority: 10
+      show_tokens:
+        led: led_rt_grn_arrow
+        color1: red
+        color2: green
+
+  s_grn_drop_target_plus1x_active:
+    color_cycle_show:
+      loops: 2
+      speed: 10
+      priority: 11
+      show_tokens:
+        led: led_rt_grn_arrow
+        color1: red
+        color2: green
+        
+  timer_cave_trap_multiball_show_timer_started:
+    color_cycle_show:
+      loops: 20
+      speed: 4
+      priority: 12
+      show_tokens:
+        led: led_rt_grn_arrow
+        color1: red
+        color2: green
+    gi_backbox_cycle_show_2:  # gi show during multiball
+      loops: 4
+      speed: 30
+
+  timer_cave_trap_start_escape_timer_started: # gi light show to get ready for ball escape from cave
+    gi_backbox_flash_show:
+      loops: 20
+      speed: 44
+      
+  s_right_saucer_active:
+    color_cycle_show:
+      loops: -1
+      speed: 1
+      priority: 13
+      show_tokens:
+        led: led_rt_grn_arrow
+        color1: red
+        color2: green
+
+

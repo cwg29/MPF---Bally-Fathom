@@ -1,0 +1,12 @@
+#config_version=5
+##! mode: lagoontrap
+
+#FATHOM
+
+mode:
+  start_events: start_mode_lagoontrap
+  stop_events: stop_mode_lagoontrap
+  priority: 300
+  
+event_player:
+  mode_popbmpr_started: initialize_lagoontrap

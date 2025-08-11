@@ -1,0 +1,191 @@
+#config_version=5
+##! mode: spec_lanes
+
+#FATHOM
+
+mode:
+  start_events: start_mode_spec_lanes
+  stop_events: stop_mode_spec_lanes
+  priority: 135
+  
+event_player:
+  mode_spec_lanes_started: initialize_spec_lanes
+  
+  
+    
+timers:    
+  spec_lane_1_timer:
+        start_value: 1
+        end_value: 0
+        direction: down
+        tick_interval: 1250ms
+        start_running: no
+        control_events:
+            - action: start
+              event: slide_spec_lane_1_slide_active
+            - action: reset
+              event: timer_spec_lane_1_timer_complete
+  spec_lane_2_timer:
+        start_value: 1
+        end_value: 0
+        direction: down
+        tick_interval: 1250ms
+        start_running: no
+        control_events:
+            - action: start
+              event: slide_spec_lane_2_slide_active
+            - action: reset
+              event: timer_spec_lane_2_timer_complete
+  spec_lane_3_timer:
+        start_value: 1
+        end_value: 0
+        direction: down
+        tick_interval: 1250ms
+        start_running: no
+        control_events:
+            - action: start
+              event: slide_spec_lane_3_slide_active
+            - action: reset
+              event: timer_spec_lane_3_timer_complete
+  spec_lane_4_timer:
+        start_value: 1
+        end_value: 0
+        direction: down
+        tick_interval: 1250ms
+        start_running: no
+        control_events:
+            - action: start
+              event: slide_spec_lane_4_slide_active
+            - action: reset
+              event: timer_spec_lane_4_timer_complete
+              
+  sling_1_timer:
+        start_value: 1
+        end_value: 0
+        direction: down
+        tick_interval: 1250ms
+        start_running: no
+        control_events:
+            - action: start
+              event: slide_sling_1_slide_active
+            - action: reset
+              event: timer_sling_1_timer_complete
+  sling_lane_2_timer:
+        start_value: 1
+        end_value: 0
+        direction: down
+        tick_interval: 1250ms
+        start_running: no
+        control_events:
+            - action: start
+              event: slide_sling_2_slide_active
+            - action: reset
+              event: timer_sling_2_timer_complete
+        
+
+
+  
+              
+    
+    
+slide_player:
+  s_ro_left_lwr_out_active:
+    spec_lane_1_slide:
+      expire: 2s
+  timer_spec_lane_1_timer_complete:
+    spec_lane_1_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 500ms
+  s_ro_left_lwr_in_active:
+    spec_lane_2_slide:
+      expire: 2s
+  timer_spec_lane_2_timer_complete:
+    spec_lane_2_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 500ms
+  s_ro_right_lwr_out_active:
+    spec_lane_3_slide:
+      expire: 2s
+  timer_spec_lane_3_timer_complete:
+    spec_lane_3_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 500ms
+  s_ro_right_lwr_in_active:
+    spec_lane_4_slide:
+      expire: 2s
+  timer_spec_lane_4_timer_complete:
+    spec_lane_4_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 500ms
+        
+  s_left_sling_shot_active:
+    sling_1_slide:
+      expire: 2s
+  timer_sling_1_timer_complete:
+    sling_1_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 500ms
+  s_right_sling_shot_active:
+    sling_2_slide:
+      expire: 2s
+  timer_sling_2_timer_complete:
+    sling_2_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 500ms
+            
+slides:
+  spec_lane_1_slide:
+    - type: video
+      video: spec_lanes_1_video
+      width: 1280
+      height: 720
+      z: 11
+      expire: 2s
+  spec_lane_2_slide:
+    - type: video
+      video: spec_lanes_2_video
+      width: 1280
+      height: 720
+      z: 12
+      expire: 2s
+  spec_lane_3_slide:
+    - type: video
+      video: spec_lanes_3_video
+      width: 1280
+      height: 720
+      z: 15
+      expire: 2s    
+  spec_lane_4_slide:
+    - type: video
+      video: spec_lanes_4_video
+      width: 1280
+      height: 720
+      z: 15
+      expire: 2s   
+
+  sling_1_slide:
+    - type: video
+      video: sling_1_video
+      width: 1280
+      height: 720
+      z: 11
+      expire: 2s
+  sling_2_slide:
+    - type: video
+      video: sling_2_video
+      width: 1280
+      height: 720
+      z: 12
+      expire: 2s      

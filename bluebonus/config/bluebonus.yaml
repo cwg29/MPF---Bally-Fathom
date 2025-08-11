@@ -1,0 +1,178 @@
+#config_version=5
+##! mode: bluebonus
+
+#FATHOM
+
+mode:
+  start_events: start_mode_bluebonus
+  stop_events: stop_mode_bluebonus
+  priority: 400
+  
+event_player:
+  mode_lagoontrap_started: initialize_bluebonus
+  drop_blue_3x_shot_hit: blue_3x_bonus_active, lagoon_trap_stage_2_complete
+  drop_blue_plus1x_shot_hit: blue_plus1x_count_up
+  blue_plus1x_count_done{count==2}: blue_plus1x_raise_again, lagoon_trap_stage_3_complete
+  blue_plus1x_count_done{count==3}: blue_plus1x_5x_mltpr, lagoon_trap_stage_3_achieved, lagoon_trap_level_1_complete
+  
+  
+  
+  
+shots:
+  drop_blue_3x_shot:
+    switch: s_blu_drop_target_3x
+    enable_events:
+      - mode_ball_starting_show_ended
+      - timer_lagoon_trap_multiball_show_timer_complete
+    disable_events:
+      - start_ball_starting_show
+      - timer_lagoon_trap_start_escape_timer_complete
+    profile: flash_profile
+    
+  drop_blue_plus1x_shot:
+    switch: s_blu_drop_target_plus1x
+    enable_events:
+      - mode_ball_starting_show_ended
+      - timer_lagoon_trap_multiball_show_timer_complete
+    disable_events:
+      - start_ball_starting_show
+      - timer_lagoon_trap_start_escape_timer_complete
+    profile: flash_profile
+
+
+### Since Fathom typically has a 3 inline drop target assembly but this Fathom only
+###  has 2 inline targets, the 2nd target (plus1x) needs to be hit twice to achieve
+###  the 5x multiplier.
+
+    
+counters:
+  blue_plus1x_count:
+    count_events: blue_plus1x_count_up 
+    events_when_hit: blue_plus1x_count_done
+    starting_count: 1
+    direction: up
+    count_complete_value: 4
+    reset_on_complete: true
+    persist_state: true
+    start_enabled: true
+    disable_on_complete: false
+    enable_events:
+      #- timer_blue_mltplr_pause_timer_complete
+      - lagoon_trap_ready_to_be_set
+      - timer_lagoon_trap_mltplr_trg_timer_complete
+    disable_events:
+      #- ball_starting
+      #- left_blue_trap_release_set
+      #- lagoon_trap_multiball_complete
+    restart_events: blue_plus1x_count_complete, reset_lagoon_trap #ball_starting  ###blue_inline_bank_reset
+    
+timers:
+  blue_plus1x_raise_again_timer:
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: blue_plus1x_raise_again
+      - action: reset
+        event: timer_blue_plus1x_raise_again_timer_complete
+        
+  blue_mltplr_pause_timer:
+    start_value: 5
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: ball_starting
+      - action: reset
+        event: timer_blue_mltplr_pause_timer_complete
+    
+coil_player:
+  timer_blue_plus1x_raise_again_timer_complete: c_drop_target_blu_1X  
+    
+    
+    
+variable_player:
+
+# initial bonus multiplier set in bonus_collect mode.
+
+  blue_3x_bonus_active:
+    blue_3x_bonus_pf_multiplier:
+      int: 3
+      action: set
+  
+  blue_plus1x_raise_again:
+    blue_3x_bonus_pf_multiplier:
+      int: 4
+      action: set
+      
+  blue_plus1x_5x_mltpr:
+    blue_3x_bonus_pf_multiplier:
+      int: 5
+      action: set
+      
+  drop_blue_3x_shot_hit:
+    score: 10000
+  
+  drop_blue_plus1x_shot_hit:
+    score: 30000
+
+show_player:
+  lagoon_trap_stage_2_achieved:
+    3X_blue_segment_display:
+      loops: 3
+      speed: 1
+      priority: 2
+  lagoon_trap_stage_3_achieved:
+    4X_blue_segment_display:
+      loops: 3
+      speed: 1
+      priority: 2
+  lagoon_trap_multiball_complete:
+    5X_blue_segment_display:
+      loops: 3
+      speed: 1
+      priority: 2
+      
+    
+light_player:   ### using achievements so the multiball tracking is not reset between balls.
+  #blue_3x_bonus_active:
+  lagoon_trap_stage_2_achieved:
+        led_blu_3X:
+            color: blue
+            fade: 500ms
+  #blue_plus1x_raise_again:
+  blue_plus1x_count_done{count==2}:
+        led_blu_4X:
+            color: orange
+            fade: 500ms
+  #blue_plus1x_5x_mltpr:
+  blue_plus1x_count_done{count==3}:
+        led_blu_5X:
+            color: white
+            fade: 500ms
+            
+slide_player:
+  lagoon_trap_stage_2_achieved:  3X_slide  #3X bonus
+  timer_timer_down_3X_mltplr_video_complete:
+    3X_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+  blue_plus1x_count_done{count==2}:  4X_slide  #4X bonus
+  timer_timer_down_4X_mltplr_video_complete:
+    4X_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+  blue_plus1x_count_done{count==3}:  5X_slide  #5X bonus
+  timer_timer_down_5X_mltplr_video_complete:
+    5X_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s

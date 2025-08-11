@@ -1,0 +1,211 @@
+#config_version=5
+##! mode: ctrdropbank
+
+#! post center_seq_event
+
+#FATHOM
+
+mode:
+  start_events: start_mode_ctrdropbank
+  stop_events: stop_mode_ctrdropbank
+  priority: 550
+  
+event_player:
+  mode_ctrdropbank_started: initialize_ctrdropbank
+  drop_1_lit_hit: ctr_drop_target_1_seq_active
+  drop_2_lit_hit: ctr_drop_target_seq_1_2_active
+  logicblock_drop_sequence_complete.1: ctr_drop_target_seq_1_2_3_achieved
+  #reset_drop_sequence: ctr_drop_target_seq_new
+  reset_drop_sequence.1: ctr_drop_target_seq_reset
+  drop_target_bank_ctr_bank_down: ctr_target_seq_reset_all
+  drop_target_bank_ctr_bank_up: ctr_target_seq_is_ready
+  
+    # When the mode starts, reset the drop sequence
+  mode_ctrdropbank_started.1: reset_drop_sequence
+  
+  # When the sequence is completed, reset the drop sequence
+  logicblock_drop_sequence_complete: reset_drop_sequence
+  
+  # When the sequence resets, advance the first target
+  reset_drop_sequence: advance_drop_1
+  
+  # When an "off" shot is hit, reset its coil
+  drop_1_off_hit: reset_drop_1
+  drop_2_off_hit: reset_drop_2
+  drop_3_off_hit: reset_drop_3
+  
+  #center_seq_event{device.sequences.center_drop_sequence_shot.value>0}: ctr_drop_target_seq_active
+  #center_seq_event2{device.sequences.center_drop_sequence_shot_hit.step>0}: ctr_drop_target_seq_active
+  
+### The center drop targets when hit in order of 1-2-3 award a 5X bonus multiplier to the active 
+### bonus color.
+  
+
+    
+shots:
+
+    
+  drop_1:
+    advance_events: drop_1_lit_hit, advance_drop_1
+    reset_events: reset_drop_sequence #, ctr_target_seq_reset_all
+    switch: s_ctr_drop_target_1
+    profile: drop_sequence
+
+  drop_2:
+    advance_events: drop_1_lit_hit, drop_2_lit_hit
+    reset_events: reset_drop_sequence #, ctr_target_seq_reset_all
+    switch: s_ctr_drop_target_2
+    profile: drop_sequence
+
+  drop_3:
+    advance_events: drop_2_lit_hit, drop_3_lit_hit
+    reset_events: reset_drop_sequence #, ctr_target_seq_reset_all
+    switch: s_ctr_drop_target_3
+    profile: drop_sequence
+
+      
+shot_profiles:
+  drop_sequence:
+    advance_on_hit: false
+    states:
+      - name: off
+        show: off
+      - name: lit
+        show: flash
+      - name: down
+        show: on
+    
+sequences:
+  drop_sequence:
+    restart_events: reset_drop_sequence
+    #reset_events: ctr_target_seq_reset_all
+    events:
+      - drop_1_lit_hit
+      - drop_2_lit_hit
+      - drop_3_lit_hit
+    
+      
+show_player:
+        
+  drop_1_lit_hit:
+    color_cycle_show:
+      loops: 1
+      speed: 10
+      priority: 12
+      show_tokens:
+        led: led_ctr_in_seq  #l_led42
+        color1: white
+        color2: blue
+  drop_2_lit_hit:
+    color_cycle_show:
+      loops: 1
+      speed: 10
+      priority: 13
+      show_tokens:
+        led: led_ctr_in_seq  #l_led42
+        color1: white
+        color2: blue
+  drop_3_lit_hit:
+    color_cycle_show:
+      loops: 8
+      speed: 10
+      priority: 14
+      show_tokens:
+        led: led_ctr_in_seq  #l_led42
+        color1: green
+        color2: lime
+  drop_1_off_hit:
+    color_cycle_show:
+      loops: 1
+      speed: 10
+      priority: 15
+      show_tokens:
+        led: led_ctr_in_seq  #l_led42
+        color1: off
+        color2: off
+  drop_2_off_hit:
+    color_cycle_show:
+      loops: 1
+      speed: 10
+      priority: 16
+      show_tokens:
+        led: led_ctr_in_seq  #l_led42
+        color1: off
+        color2: off
+  drop_3_off_hit:
+    color_cycle_show:
+      loops: 1
+      speed: 10
+      priority: 17
+      show_tokens:
+        led: led_ctr_in_seq  #l_led42
+        color1: off
+        color2: off
+  ctr_target_seq_reset_all:
+    color_cycle_show:
+      loops: 6
+      speed: 12
+      priority: 19
+      show_tokens:
+        led: led_ctr_in_seq  #l_led42
+        color1: green
+        color2: yellow
+  ctr_drop_target_seq_1_2_3_achieved:
+    color_cycle_show:
+      loops: 10
+      speed: 12
+      priority: 18
+      show_tokens:
+        led: led_ctr_in_seq  #l_led42
+        color1: blue
+        color2: red
+  
+
+  
+    
+light_player:
+    ###center_seq_event{device.sequences.center_drop_sequence_shot.enabled==true}:
+    drop_1_lit_hit:    
+        led_ctr_in_seq:  #l_led42
+            color: blue
+            fade: 500ms
+    drop_2_lit_hit:    
+        led_ctr_in_seq:  #l_led42
+            color: white
+            fade: 500ms
+    ctr_drop_target_seq_reset:
+        led_ctr_in_seq:  #l_led42
+            color: off
+            fade: 500ms
+    drop_1_off_hit:
+        led_ctr_in_seq:  #l_led42
+            color: off
+            fade: 500ms
+    drop_2_off_hit:
+        led_ctr_in_seq:  #l_led42
+            color: off
+            fade: 500ms
+    drop_3_off_hit:
+        led_ctr_in_seq:  #l_led42
+            color: off
+            fade: 500ms
+    ctr_target_seq_reset_all:
+        led_ctr_in_seq:  #l_led42
+            color: off
+            fade: 500ms            
+  
+  
+variable_player:
+
+  s_ctr_drop_target_1_active:
+    score: 500 * current_player.blue_bns_multiplier * current_player.green_bns_multiplier
+    
+  
+  s_ctr_drop_target_2_active:
+    score: 500 * current_player.blue_bns_multiplier * current_player.green_bns_multiplier
+    
+  
+  s_ctr_drop_target_3_active:
+    score: 500 * current_player.blue_bns_multiplier * current_player.green_bns_multiplier
+    
+  

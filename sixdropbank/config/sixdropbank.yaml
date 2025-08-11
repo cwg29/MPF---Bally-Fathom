@@ -1,0 +1,280 @@
+#config_version=5
+##! mode: sixdropbank
+
+#FATHOM
+
+mode:
+  start_events: start_mode_sixdropbank
+  stop_events: stop_mode_sixdropbank
+  priority: 350
+  
+event_player:
+  mode_sixdropbank_started: initialize_sixdropbank
+  left_blue_bank_shot_on_complete: left_blue_drop_targets_down
+  left_green_bank_shot_on_complete: left_green_drop_targets_down
+  
+shots:
+    
+  left_bnk_drop_1:
+    switch: s_left_drop1_target_1
+    enable_events: mode_ball_starting_show_ended
+    disable_events: start_ball_starting_show
+    profile: flash_profile
+  left_bnk_drop_2:
+    switch: s_left_drop1_target_2
+    enable_events: mode_ball_starting_show_ended
+    disable_events: start_ball_starting_show
+    profile: flash_profile
+  left_bnk_drop_3:
+    switch: s_left_drop1_target_3
+    enable_events: mode_ball_starting_show_ended
+    disable_events: start_ball_starting_show
+    profile: flash_profile
+  left_bnk_drop_4:
+    switch: s_left_drop2_target_1
+    enable_events: mode_ball_starting_show_ended
+    disable_events: start_ball_starting_show
+    profile: flash_profile
+  left_bnk_drop_5:
+    switch: s_left_drop2_target_2
+    enable_events: mode_ball_starting_show_ended
+    disable_events: start_ball_starting_show
+    profile: flash_profile
+  left_bnk_drop_6:
+    switch: s_left_drop2_target_3
+    enable_events: mode_ball_starting_show_ended
+    disable_events: start_ball_starting_show
+    profile: flash_profile
+    
+shot_groups:
+  left_blue_bank_shot:
+    shots: left_bnk_drop_1, left_bnk_drop_3, left_bnk_drop_5
+    reset_events:
+      left_blue_bank_shot_on_complete: 2s
+  left_green_bank_shot:
+    shots: left_bnk_drop_2, left_bnk_drop_4, left_bnk_drop_6
+    reset_events:
+      left_green_bank_shot_on_complete: 2s
+      
+sequences:
+  lagoon_left_drop_release_seq:
+    persist_state: true
+    events:
+      - lagoon_trap_ready_to_be_set
+      - left_blue_drop_targets_down
+    events_when_complete: left_blue_trap_release_set
+    
+  cave_left_drop_release_seq:
+    persist_state: true
+    events:
+      - cave_trap_ready_to_be_set
+      - left_green_drop_targets_down
+    events_when_complete: left_green_trap_release_set
+      
+timers:
+  lagoon_trap_left_drop_timer: # drop targets raise and lower is staggered
+    start_value: 2
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: left_blue_trap_release_set
+      - action: reset
+        event: timer_lagoon_trap_left_drop_timer_complete
+  lagoon_trap_left_drop_timer2: # drop targets raise and lower is staggered
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: timer_lagoon_trap_left_drop_timer_complete
+      - action: reset
+        event: timer_lagoon_trap_left_drop_timer2_complete
+  lagoon_trap_left_drop_timer3: # drop targets raise and lower is staggered
+    start_value: 2
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: timer_lagoon_trap_left_drop_timer2_complete
+      - action: reset
+        event: timer_lagoon_trap_left_drop_timer3_complete
+        
+  cave_trap_left_drop_timer: # drop targets raise and lower is staggered
+    start_value: 2
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: left_green_trap_release_set
+      - action: reset
+        event: timer_cave_trap_left_drop_timer_complete
+  cave_trap_left_drop_timer2: # drop targets raise and lower is staggered
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: timer_cave_trap_left_drop_timer_complete
+      - action: reset
+        event: timer_cave_trap_left_drop_timer2_complete
+  cave_trap_left_drop_timer3: # drop targets raise and lower is staggered
+    start_value: 2
+    end_value: 0
+    direction: down
+    tick_interval: 500ms
+    control_events:
+      - action: start
+        event: timer_cave_trap_left_drop_timer2_complete
+      - action: reset
+        event: timer_cave_trap_left_drop_timer3_complete
+        
+  green_drop_shot_video_timer:
+        start_value: 3
+        end_value: 0
+        direction: down
+        tick_interval: 1s
+        start_running: no
+        control_events:
+            - event: slide_green_drop_slide_active
+              action: start
+            - event: timer_green_drop_shot_video_timer_complete
+              action: reset
+  blue_drop_shot_video_timer:
+        start_value: 3
+        end_value: 0
+        direction: down
+        tick_interval: 1s
+        start_running: no
+        control_events:
+            - event: slide_blue_drop_slide_active
+              action: start
+            - event: timer_blue_drop_shot_video_timer_complete
+              action: reset
+
+show_player:
+  left_blue_bank_shot_on_complete:
+    color_cycle_show:
+      loops: 4
+      speed: 8
+      priority: 12
+      show_tokens:
+        led: led_lf_bnk_blue  #led_lf_bnk_blue
+        color1: red
+        color2: blue
+  left_green_bank_shot_on_complete:
+    color_cycle_show:
+      loops: 4
+      speed: 8
+      priority: 13
+      show_tokens:
+        led: led_lf_bnk_grn  #led_lf_bnk_grn
+        color1: red
+        color2: green
+  drop_target_bank_left_bank1_down:
+    color_cycle_show:
+      loops: 4
+      speed: 8
+      priority: 11
+      show_tokens:
+        led: gi, led_lf_bnk  
+        color1: green
+        color2: blue
+  cave_trap_ready_to_be_set:
+    color_cycle_show:
+      loops: 3
+      speed: 5
+      priority: 14
+      show_tokens:
+        led: led_grn_trg_dwn  
+        color1: red
+        color2: green
+  lagoon_trap_ready_to_be_set:
+    color_cycle_show:
+      loops: 3
+      speed: 5
+      priority: 14
+      show_tokens:
+        led: led_blu_trg_dwn 
+        color1: red
+        color2: blue
+        
+light_player:
+  cave_trap_ready_to_be_set:
+    led_grn_trg_dwn:
+      color: green
+      fade: 500ms
+  lagoon_trap_ready_to_be_set:
+    led_blu_trg_dwn:
+      color: blue
+      fade: 500ms
+  left_green_bank_shot_on_complete:
+    led_grn_trg_dwn:
+      color: off
+      fade: 500ms
+  left_blue_bank_shot_on_complete:
+    led_blu_trg_dwn:
+      color: off
+      fade: 500ms
+    
+variable_player:
+
+  s_left_drop1_target_1_active:
+    score: 500 * current_player.blue_3x_bonus_pf_multiplier
+  s_left_drop1_target_2_active:
+    score: 500 * current_player.green_3x_bonus_pf_multiplier
+  s_left_drop1_target_3_active:
+    score: 500 * current_player.blue_3x_bonus_pf_multiplier
+  s_left_drop2_target_1_active:
+    score: 500 * current_player.green_3x_bonus_pf_multiplier
+  s_left_drop2_target_2_active:
+    score: 500 * current_player.blue_3x_bonus_pf_multiplier
+  s_left_drop2_target_3_active:
+    score: 500 * current_player.green_3x_bonus_pf_multiplier
+  left_green_bank_shot_on_complete:
+    score: 5000 * current_player.green_3x_bonus_pf_multiplier
+  left_blue_bank_shot_on_complete:
+    score: 5000 * current_player.green_3x_bonus_pf_multiplier
+    
+slide_player:
+  left_green_bank_shot_on_complete:
+    green_drop_slide:
+      expire: 5s  #left green drop bank
+  timer_green_drop_shot_video_timer_complete:
+    green_drop_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+  left_blue_bank_shot_on_complete:
+    blue_drop_slide:
+      expire: 5s #left blue drop bank
+  timer_blue_drop_shot_video_timer_complete:
+    blue_drop_slide:
+      action: remove
+      transition:
+        type: fade
+        duration: 1s
+
+
+
+slides:
+  green_drop_slide:
+    - type: video
+      video: green_drop_video
+      height: 720
+      width: 1280
+      z: 2
+      expire: 4s
+  blue_drop_slide:
+    - type: video
+      video: blue_drop_video
+      height: 720
+      width: 1280
+      z: 3
+      expire: 4s

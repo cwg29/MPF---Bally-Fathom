@@ -1,0 +1,153 @@
+#config_version=5
+##! mode: high_score
+#! variable_player:
+#!   score_100:
+#!     score: 2000000
+##! mode: high_score
+# modes/high_score/config/high_score.yaml
+mode:
+  priority: 500
+  start_events: game_ending, start_high_score
+  use_wait_queue: true
+high_score:
+  _overwrite: true
+  enter_initials_timeout: 80
+  award_slide_display_time: 4s
+  # define your high score categories and the awards
+  categories: !!omap
+    - score:
+        - DIVER CAPTAIN
+        - DIVER LIEUTENANT
+        - DIVER ENSIGN
+        
+
+  # set the defaults
+  defaults:
+    score:
+      - CWG: 12540 
+      - TRI: 9000
+      - JAN: 8000
+      
+    
+  #vars:
+    #loops:
+      #- player: character
+slide_player:
+  _overwrite: true
+  high_score_enter_initials: high_score_enter_initials
+  high_score_award_display: high_score_award_display
+  
+slides:
+  _overwrite: true
+  high_score_enter_initials:
+    - type: text
+      style: big
+      font_size: 30
+      text: PLAYER (player_num)
+      color: white
+      x: center
+      y: top-130
+    - type: text
+      style: big
+      font_size: 30
+      text: (award)
+      color: red
+      x: center
+      y: top-90
+    - type: text_input
+      initial_char: A
+      dynamic_x: false
+      key: high_score
+      style: big
+      font_size: 30
+      max_chars: 3
+      x: center
+      y: top-25
+      shift_left_event: s_left_flipper_active
+      shift_right_event: s_right_flipper_active
+      select_event: s_startbutton_active
+      color: white
+    - type: text
+      style: big
+      text: '<       >'
+      font_size: 30
+      x: center
+      y: top-25
+      color: white
+    - type: text
+      text: ''
+      key: high_score
+      font_size: 30
+      style: big
+      x: center
+      y: top-70
+      color: ff00ff
+      animations:
+        show_slide:
+          - property: opacity
+            value: 1
+            duration: 0.3s
+            easing: in_out_quint
+          - property: opacity
+            value: 0
+            duration: 0.3s
+            repeat: true
+            easing: in_out_quint
+    - type: image
+      image: hi_score_image_1
+  high_score_award_display:
+    - type: text
+      text: (award)
+      font_size: 30
+      style: big
+      x: center
+      y: top-110
+      color: white
+    - type: text
+      text: (value)
+      style: big
+      x: center+85
+      y: top-35
+      color: 4040FF
+      font_size: 30
+      number_grouping: true
+      min_digits: 2
+    - type: image
+      image: hi_score_image_1
+  loops_award_display:
+    - type: text
+      text: (award)
+      font_size: 30
+      style: big
+      x: center
+      y: top-130
+      color: white
+    - type: text
+      text: (value)
+      style: big
+      x: center
+      y: top-50
+      color: 4040FF
+      font_size: 30
+      number_grouping: true
+      min_digits: 2
+    - type: text
+      text: (player(player_num)|character)
+      style: big
+      x: center
+      y: top-15
+      color: white
+      font_size: 30
+    - type: image
+      image: hi_score_image_1
+      
+sound_player: 
+  mode_high_score_started:
+    high_score_music_1:
+      action: play
+      #fade_in: 1s
+      loops: -1
+  mode_high_score_stopping:
+      high_score_music_1:
+        action: stop
+        fade_out: 1s      

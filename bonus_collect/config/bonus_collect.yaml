@@ -1,0 +1,1188 @@
+#config_version=5
+##! mode: bonus_collect
+
+#FATHOM
+
+mode:
+  start_events: start_mode_bonus_collect
+  stop_events: stop_mode_bonus_collect
+  priority: 500
+  
+  ### A. BONUS SCORE FEATURE  ###
+#The blue bonus is advanced one step by the blue targets on the left side, the center drop targets and
+#rights ide target when lit, the left top rollover(A) the center rollover(B) the left return lane, right outlane,
+#and blue inline targets advance from 1 to 3 advances.
+
+#The green bonus is advanced one step by the green target on the left side, the center drop target and
+#right side target when lit, the right top rollover(C), the center rollover(B), the left outlane, right return
+#lane, and the green inline targets advance from 1 to 3 advances.
+  
+event_player:
+  mode_bonus_started: initialize_bonus_collect
+  s_left_drop1_target_1_active: blue_count_up
+  s_left_drop1_target_3_active: blue_count_up
+  s_left_drop2_target_2_active: blue_count_up
+  s_left_drop1_target_2_active: green_count_up
+  s_left_drop2_target_1_active: green_count_up
+  s_left_drop2_target_3_active: green_count_up
+  
+  center_drop_1_blue_ready_hit: blue_count_up
+  center_drop_1_green_ready_hit: green_count_up
+  center_drop_2_blue_ready_hit: blue_count_up
+  center_drop_2_green_ready_hit: green_count_up
+  center_drop_3_blue_ready_hit: blue_count_up
+  center_drop_3_green_ready_hit: green_count_up
+  
+  standup_target_blue_ready_hit: blue_count_up
+  standup_target_green_ready_hit: green_count_up
+  
+  lane_change_1_hit: blue_count_up
+  lane_change_2_hit: blue_count_up
+  lane_change_2_hit.1: green_count_up
+  lane_change_3_hit: green_count_up
+
+  s_ro_left_lwr_out_active: blue_count_up  
+  s_ro_left_lwr_in_active: green_count_up  
+  s_ro_right_lwr_in_active: blue_count_up  
+  s_ro_right_lwr_out_active: green_count_up  
+  
+  
+  #the left outlane, right return
+  #lane, and the green inline targets advance from 1 to 3 advances 
+  s_ro_left_lwr_out_active.1: blue_adv_count_up
+  s_ro_left_lwr_in_active.1: green_adv_count_up 
+  s_ro_right_lwr_in_active.1: blue_adv_count_up
+  s_ro_right_lwr_out_active.1: green_adv_count_up
+
+  blue_adv_bonus_count_done{count==1}: blue_count_up  
+  blue_adv_bonus_count_done{count==2}: blue_count_up, blue_count_up_again  
+  blue_count_up_again: blue_count_up
+  
+  green_adv_bonus_count_done{count==1}: green_count_up 
+  green_adv_bonus_count_done{count==2}: green_count_up, green_count_up_again 
+  green_count_up_again: green_count_up
+  
+    
+  #green_count_up{current_player.green_bonus_total_advance==1}: green_adv_1_active
+  #green_count_up{current_player.green_bonus_total_advance==2}: green_adv_2_active
+  #green_count_up{current_player.green_bonus_total_advance==3}: green_adv_3_active
+  #green_count_up{current_player.green_bonus_total_advance==4}: green_adv_4_active
+  #green_count_up{current_player.green_bonus_total_advance==5}: green_adv_5_active
+  #green_count_up{current_player.green_bonus_total_advance==6}: green_adv_6_active
+  #green_count_up{current_player.green_bonus_total_advance==7}: green_adv_7_active
+  #green_count_up{current_player.green_bonus_total_advance==8}: green_adv_8_active
+  #green_count_up{current_player.green_bonus_total_advance==9}: green_adv_9_active
+  #green_count_up{current_player.green_bonus_total_advance==10}: green_adv_10_active
+  #current_player.green_bonus_total_advance.value==11: green_adv_50_active
+  
+  green_bonus_collect_count_done{count==1}: green_adv_1_active
+  green_bonus_collect_count_done{count==2}: green_adv_2_active
+  green_bonus_collect_count_done{count==3}: green_adv_3_active
+  green_bonus_collect_count_done{count==4}: green_adv_4_active
+  green_bonus_collect_count_done{count==5}: green_adv_5_active
+  green_bonus_collect_count_done{count==6}: green_adv_6_active
+  green_bonus_collect_count_done{count==7}: green_adv_7_active
+  green_bonus_collect_count_done{count==8}: green_adv_8_active
+  green_bonus_collect_count_done{count==9}: green_adv_9_active
+  green_bonus_collect_count_done{count==10}: green_adv_10_active
+  
+  green_bonus_collect_count_done{count==11}: green_adv_1_active, green_clear_lights
+  green_bonus_collect_count_done{count==12}: green_adv_2_active
+  green_bonus_collect_count_done{count==13}: green_adv_3_active
+  green_bonus_collect_count_done{count==14}: green_adv_4_active
+  green_bonus_collect_count_done{count==15}: green_adv_5_active
+  green_bonus_collect_count_done{count==16}: green_adv_6_active
+  green_bonus_collect_count_done{count==17}: green_adv_7_active
+  green_bonus_collect_count_done{count==18}: green_adv_8_active
+  green_bonus_collect_count_done{count==19}: green_adv_9_active
+  green_bonus_collect_count_done{count==20}: green_adv_10_active
+  
+  green_bonus_collect_count_done{count==21}: green_adv_1_active, green_clear_lights
+  green_bonus_collect_count_done{count==22}: green_adv_2_active
+  green_bonus_collect_count_done{count==23}: green_adv_3_active
+  green_bonus_collect_count_done{count==24}: green_adv_4_active
+  green_bonus_collect_count_done{count==25}: green_adv_5_active
+  green_bonus_collect_count_done{count==26}: green_adv_6_active
+  green_bonus_collect_count_done{count==27}: green_adv_7_active
+  green_bonus_collect_count_done{count==28}: green_adv_8_active
+  green_bonus_collect_count_done{count==29}: green_adv_9_active
+  green_bonus_collect_count_done{count==30}: green_adv_10_active
+  
+  green_bonus_collect_count_done{count==31}: green_adv_1_active, green_clear_lights
+  green_bonus_collect_count_done{count==32}: green_adv_2_active
+  green_bonus_collect_count_done{count==33}: green_adv_3_active
+  green_bonus_collect_count_done{count==34}: green_adv_4_active
+  green_bonus_collect_count_done{count==35}: green_adv_5_active
+  green_bonus_collect_count_done{count==36}: green_adv_6_active
+  green_bonus_collect_count_done{count==37}: green_adv_7_active
+  green_bonus_collect_count_done{count==38}: green_adv_8_active
+  green_bonus_collect_count_done{count==39}: green_adv_9_active
+  green_bonus_collect_count_done{count==40}: green_adv_10_active
+  
+  green_bonus_collect_count_done{count==41}: green_adv_1_active4, green_clear_lights
+  green_bonus_collect_count_done{count==42}: green_adv_2_active4
+  green_bonus_collect_count_done{count==43}: green_adv_3_active4
+  green_bonus_collect_count_done{count==44}: green_adv_4_active4
+  green_bonus_collect_count_done{count==45}: green_adv_5_active4
+  green_bonus_collect_count_done{count==46}: green_adv_6_active4
+  green_bonus_collect_count_done{count==47}: green_adv_7_active4
+  green_bonus_collect_count_done{count==48}: green_adv_8_active4
+  green_bonus_collect_count_done{count==49}: green_adv_9_active4
+  green_bonus_collect_count_done{count==50}: green_adv_10_active4
+  
+  green_bonus_collect_count_done{count==51}: green_adv_50_active
+  
+  blue_bonus_collect_count_done{count==1}: blue_adv_1_active
+  blue_bonus_collect_count_done{count==2}: blue_adv_2_active
+  blue_bonus_collect_count_done{count==3}: blue_adv_3_active
+  blue_bonus_collect_count_done{count==4}: blue_adv_4_active
+  blue_bonus_collect_count_done{count==5}: blue_adv_5_active
+  blue_bonus_collect_count_done{count==6}: blue_adv_6_active
+  blue_bonus_collect_count_done{count==7}: blue_adv_7_active
+  blue_bonus_collect_count_done{count==8}: blue_adv_8_active
+  blue_bonus_collect_count_done{count==9}: blue_adv_9_active
+  blue_bonus_collect_count_done{count==10}: blue_adv_10_active
+  
+  blue_bonus_collect_count_done{count==11}: blue_adv_1_active, blue_clear_lights
+  blue_bonus_collect_count_done{count==12}: blue_adv_2_active
+  blue_bonus_collect_count_done{count==13}: blue_adv_3_active
+  blue_bonus_collect_count_done{count==14}: blue_adv_4_active
+  blue_bonus_collect_count_done{count==15}: blue_adv_5_active
+  blue_bonus_collect_count_done{count==16}: blue_adv_6_active
+  blue_bonus_collect_count_done{count==17}: blue_adv_7_active
+  blue_bonus_collect_count_done{count==18}: blue_adv_8_active
+  blue_bonus_collect_count_done{count==19}: blue_adv_9_active
+  blue_bonus_collect_count_done{count==20}: blue_adv_10_active
+  
+  blue_bonus_collect_count_done{count==21}: blue_adv_1_active, blue_clear_lights
+  blue_bonus_collect_count_done{count==22}: blue_adv_2_active
+  blue_bonus_collect_count_done{count==23}: blue_adv_3_active
+  blue_bonus_collect_count_done{count==24}: blue_adv_4_active
+  blue_bonus_collect_count_done{count==25}: blue_adv_5_active
+  blue_bonus_collect_count_done{count==26}: blue_adv_6_active
+  blue_bonus_collect_count_done{count==27}: blue_adv_7_active
+  blue_bonus_collect_count_done{count==28}: blue_adv_8_active
+  blue_bonus_collect_count_done{count==29}: blue_adv_9_active
+  blue_bonus_collect_count_done{count==30}: blue_adv_10_active
+  
+  blue_bonus_collect_count_done{count==31}: blue_adv_1_active, blue_clear_lights
+  blue_bonus_collect_count_done{count==32}: blue_adv_2_active
+  blue_bonus_collect_count_done{count==33}: blue_adv_3_active
+  blue_bonus_collect_count_done{count==34}: blue_adv_4_active
+  blue_bonus_collect_count_done{count==35}: blue_adv_5_active
+  blue_bonus_collect_count_done{count==36}: blue_adv_6_active
+  blue_bonus_collect_count_done{count==37}: blue_adv_7_active
+  blue_bonus_collect_count_done{count==38}: blue_adv_8_active
+  blue_bonus_collect_count_done{count==39}: blue_adv_9_active
+  blue_bonus_collect_count_done{count==40}: blue_adv_10_active
+  
+  blue_bonus_collect_count_done{count==41}: blue_adv_1_active, blue_clear_lights
+  blue_bonus_collect_count_done{count==42}: blue_adv_2_active
+  blue_bonus_collect_count_done{count==43}: blue_adv_3_active
+  blue_bonus_collect_count_done{count==44}: blue_adv_4_active
+  blue_bonus_collect_count_done{count==45}: blue_adv_5_active
+  blue_bonus_collect_count_done{count==46}: blue_adv_6_active
+  blue_bonus_collect_count_done{count==47}: blue_adv_7_active
+  blue_bonus_collect_count_done{count==48}: blue_adv_8_active
+  blue_bonus_collect_count_done{count==49}: blue_adv_9_active
+  blue_bonus_collect_count_done{count==50}: blue_adv_10_active
+  
+  blue_bonus_collect_count_done{count==51}: blue_adv_50_active
+  
+  #green_adv_bonus_count_done{count==1}: green_adv_bns_1_active
+  #green_adv_bonus_count_done{count==2}: green_adv_bns_2_active
+  
+  
+  #blue_adv_bonus_count_done{count==1}: blue_adv_bns_1_active
+  #blue_adv_bonus_count_done{count==2}: blue_adv_bns_2_active
+  
+  
+### Center drop targets and standup target only score a bonus based on which adv light is lit  ###
+
+shots:
+  center_drop_1_blu:
+    switch: s_ctr_drop_target_1
+    profile: flash_profile
+  center_drop_2_blu:
+    switch: s_ctr_drop_target_2
+    profile: flash_profile
+  center_drop_3_blu:
+    switch: s_ctr_drop_target_3
+    profile: flash_profile
+    
+  center_drop_1_grn:
+    switch: s_ctr_drop_target_1
+    profile: flash_profile
+  center_drop_2_grn:
+    switch: s_ctr_drop_target_2
+    profile: flash_profile
+  center_drop_3_grn:
+    switch: s_ctr_drop_target_3
+    profile: flash_profile
+    
+  standup_target:
+    switch: s_right_standup_target
+    profile: flash_profile
+    
+
+shot_groups:
+
+  center_drop_1_blue_ready:
+    shots: center_drop_1_blu
+    enable_events: green_adv_bonus_active
+    disable_events: blue_adv_bonus_active
+    reset_events:
+      center_drop_1_blue_ready_on_complete: 200ms
+      
+  center_drop_1_green_ready:
+    shots: center_drop_1_grn
+    enable_events: blue_adv_bonus_active
+    disable_events: green_adv_bonus_active
+    reset_events:
+      center_drop_1_green_ready_on_complete: 200ms
+      
+  center_drop_2_blue_ready:
+    shots: center_drop_2_blu
+    enable_events: green_adv_bonus_active
+    disable_events: blue_adv_bonus_active
+    reset_events:
+      center_drop_2_blue_ready_on_complete: 200ms
+      
+  center_drop_2_green_ready:
+    shots: center_drop_2_grn
+    enable_events: blue_adv_bonus_active
+    disable_events: green_adv_bonus_active
+    reset_events:
+      center_drop_2_green_ready_on_complete: 200ms
+      
+  center_drop_3_blue_ready:
+    shots: center_drop_3_blu
+    enable_events: green_adv_bonus_active
+    disable_events: blue_adv_bonus_active
+    reset_events:
+      center_drop_3_blue_ready_on_complete: 200ms
+      
+  center_drop_3_green_ready:
+    shots: center_drop_3_grn
+    enable_events: blue_adv_bonus_active
+    disable_events: green_adv_bonus_active
+    reset_events:
+      center_drop_3_green_ready_on_complete: 200ms
+      
+  standup_target_blue_ready:
+    shots: standup_target
+    enable_events: green_adv_bonus_active
+    disable_events: blue_adv_bonus_active
+    reset_events:
+      standup_target_blue_ready_on_complete: 200ms
+      
+  standup_target_green_ready:
+    shots: standup_target
+    enable_events: blue_adv_bonus_active
+    disable_events: green_adv_bonus_active
+    reset_events:
+      standup_target_green_ready_on_complete: 200ms
+  
+  
+  
+counters:
+
+# Counters will get multiplied by 1 to 3 advances.  Need event
+
+  green_bonus_collect_count:
+    count_events: green_count_up 
+    events_when_hit: green_bonus_collect_count_done
+    starting_count: 0
+    direction: up
+    count_complete_value: 51
+    reset_on_complete: true
+    persist_state: false
+    start_enabled: true
+    disable_on_complete: true
+    restart_events: ball_started
+    
+  blue_bonus_collect_count:
+    count_events: blue_count_up
+    events_when_hit: blue_bonus_collect_count_done
+    starting_count: 0
+    direction: up
+    count_complete_value: 51
+    reset_on_complete: true
+    persist_state: false
+    start_enabled: true
+    disable_on_complete: true
+    restart_events: ball_started
+    
+#the left outlane, right return
+#lane, and the green inline targets advance from 1 to 3 advances 
+    
+  green_adv_bonus_count:
+    count_events: green_adv_count_up 
+    events_when_hit: green_adv_bonus_count_done
+    starting_count: 0
+    direction: up
+    count_complete_value: 2
+    reset_on_complete: false
+    persist_state: false
+    start_enabled: true
+    disable_on_complete: true
+    restart_events: ball_started
+    
+  blue_adv_bonus_count:
+    count_events: blue_adv_count_up 
+    events_when_hit: blue_adv_bonus_count_done
+    starting_count: 0
+    direction: up
+    count_complete_value: 2
+    reset_on_complete: false
+    persist_state: false
+    start_enabled: true
+    disable_on_complete: true
+    restart_events: ball_started
+    
+timers:  #start_ball_ending_show
+  green_bonus_collect_timer:
+    start_value:  30
+    end_value: 0
+    direction: down
+    tick_interval: 0.070 * current_player.green_collect_hit_total
+    control_events:
+      - action: start
+        event:  start_ball_ending_show
+      - action: stop
+        event: mode_start_ball_ending_show_ended
+        
+  #blue_bonus_collect_timer:
+    #start_value:  30
+    #end_value: 0
+    #direction: down
+    #tick_interval: 0.070 * current_player.blue_collect_hit_total
+    #control_events:
+      #- action: start
+        #event:  start_ball_ending_show
+      #- action: stop
+        #event: mode_start_ball_ending_show_ended
+    
+    
+light_player:
+
+  green_adv_bonus_count(count=1):
+        led_ctr_dbl_wlit:
+            color: off
+            fade: 300ms  
+  green_adv_bonus_count(count=2):
+        led_ctr_dbl_wlit:
+            color: yellow
+            fade: 300ms
+  green_adv_bonus_count(count=3):
+        led_ctr_trip_wlit:
+            color: yellow
+            fade: 300ms
+  
+  
+  green_adv_1_active:
+        led_grn_1:
+            color: green
+            fade: 300ms
+  green_adv_2_active:
+        led_grn_2:
+            color: green
+            fade: 300ms
+  green_adv_3_active:
+        led_grn_3:
+            color: green
+            fade: 300ms
+  green_adv_4_active:
+        led_grn_4:
+            color: green
+            fade: 300ms
+  green_adv_5_active:
+        led_grn_5:
+            color: green
+            fade: 300ms
+  green_adv_6_active:
+        led_grn_6:
+            color: green
+            fade: 300ms
+  green_adv_7_active:
+        led_grn_7:
+            color: green
+            fade: 300ms
+  green_adv_8_active:
+        led_grn_8:
+            color: green
+            fade: 300ms
+  green_adv_9_active:
+        led_grn_9:
+            color: green
+            fade: 300ms
+  green_adv_10_active:
+        led_grn_10:
+            color: green
+            fade: 300ms
+  green_adv_50_active:
+        led_grn_50:
+            color: green
+            fade: 300ms
+            
+  blue_adv_1_active:
+        led_blu_1:
+            color: blue
+            fade: 300ms
+  blue_adv_2_active:
+        led_blu_2:
+            color: blue
+            fade: 300ms
+  blue_adv_3_active:
+        led_blu_3:
+            color: blue
+            fade: 300ms
+  blue_adv_4_active:
+        led_blu_4:
+            color: blue
+            fade: 300ms
+  blue_adv_5_active:
+        led_blu_5:
+            color: blue
+            fade: 300ms
+  blue_adv_6_active:
+        led_blu_6:
+            color: blue
+            fade: 300ms
+  blue_adv_7_active:
+        led_blu_7:
+            color: blue
+            fade: 300ms
+  blue_adv_8_active:
+        led_blu_8:
+            color: blue
+            fade: 300ms
+  blue_adv_9_active:
+        led_blu_9:
+            color: blue
+            fade: 300ms
+  blue_adv_10_active:
+        led_blu_10:
+            color: blue
+            fade: 300ms
+  blue_adv_50_active:
+        led_blu_50:
+            color: blue
+            fade: 300ms
+            
+  #clear lights on next base 10 count up.
+  
+  green_clear_lights:
+  
+        led_grn_2:
+            color: 210149
+            fade: 300ms
+  
+        led_grn_3:
+            color: 210149
+            fade: 300ms
+  
+        led_grn_4:
+            color: 210149
+            fade: 300ms
+  
+        led_grn_5:
+            color: 210149
+            fade: 300ms
+  
+        led_grn_6:
+            color: 210149
+            fade: 300ms
+ 
+        led_grn_7:
+            color: 210149
+            fade: 300ms
+  
+        led_grn_8:
+            color: 210149
+            fade: 300ms
+  
+        led_grn_9:
+            color: 210149
+            fade: 300ms
+  
+        led_grn_10:
+            color: 210149
+            fade: 300ms
+            
+  blue_clear_lights:
+  
+        led_blu_2:
+            color: 210149
+            fade: 300ms
+  
+        led_blu_3:
+            color: 210149
+            fade: 300ms
+  
+        led_blu_4:
+            color: 210149
+            fade: 300ms
+  
+        led_blu_5:
+            color: 210149
+            fade: 300ms
+  
+        led_blu_6:
+            color: 210149
+            fade: 300ms
+ 
+        led_blu_7:
+            color: 210149
+            fade: 300ms
+  
+        led_blu_8:
+            color: 210149
+            fade: 300ms
+  
+        led_blu_9:
+            color: 210149
+            fade: 300ms
+  
+        led_blu_10:
+            color: 210149
+            fade: 300ms
+            
+    #clear lights on next base 10 count up.
+    
+  timer_green_bonus_collect_timer_tick{ticks>9 and ticks<50}:    #### light appropriate bonus light based on timer 'tick'
+        led_blu_bonus_set: on
+        led_grn_bonus_set: on
+  
+        
+  
+  
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 29}:
+        led_grn_9: on
+        led_blu_9: on
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 28}:
+        led_grn_8: on
+        led_grn_9: off
+        led_blu_8: on
+        led_blu_9: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 27}:
+        led_grn_7: on
+        led_grn_8: off
+        led_blu_7: on
+        led_blu_8: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 26}:
+        led_grn_6: on
+        led_grn_7: off
+        led_blu_6: on
+        led_blu_7: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 25}:
+        led_grn_5: on
+        led_grn_6: off
+        led_blu_5: on
+        led_blu_6: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 24}:
+        led_grn_4: on
+        led_grn_5: off
+        led_blu_4: on
+        led_blu_5: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 23}:
+        led_grn_3: on
+        led_grn_4: off
+        led_blu_3: on
+        led_blu_4: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 22}:
+        led_grn_2: on
+        led_grn_3: off
+        led_blu_2: on
+        led_blu_3: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 21}:
+        led_grn_1: on
+        led_grn_2: off
+        led_blu_1: on
+        led_blu_2: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 20}:
+        led_grn_1: off
+        led_blu_1: off
+        
+
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 19}:
+        led_grn_9: on
+        led_blu_9: on
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 18}:
+        led_grn_8: on
+        led_grn_9: off
+        led_blu_8: on
+        led_blu_9: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 17}:
+        led_grn_7: on
+        led_grn_8: off
+        led_blu_7: on
+        led_blu_8: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 16}:
+        led_grn_6: on
+        led_grn_7: off
+        led_blu_6: on
+        led_blu_7: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 15}:
+        led_grn_5: on
+        led_grn_6: off
+        led_blu_5: on
+        led_blu_6: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 14}:
+        led_grn_4: on
+        led_grn_5: off
+        led_blu_4: on
+        led_blu_5: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 13}:
+        led_grn_3: on
+        led_grn_4: off
+        led_blu_3: on
+        led_blu_4: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 12}:
+        led_grn_2: on
+        led_grn_3: off
+        led_blu_2: on
+        led_blu_3: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 11}:
+        led_grn_1: on
+        led_grn_2: off
+        led_blu_1: on
+        led_blu_2: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 10}:
+        led_grn_1: off
+        led_blu_1: off
+        
+  
+  timer_green_bonus_collect_timer_tick{ticks<10}:
+        led_grn_10: off
+        led_blu_10: off
+
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 9}:
+        led_grn_9: on
+        led_blu_9: on
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 8}:
+        led_grn_8: on
+        led_grn_9: off
+        led_blu_8: on
+        led_blu_9: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 7}:
+        led_grn_7: on
+        led_grn_8: off
+        led_blu_7: on
+        led_blu_8: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 6}:
+        led_grn_6: on
+        led_grn_7: off
+        led_blu_6: on
+        led_blu_7: off        
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 5}:
+        led_grn_5: on
+        led_grn_6: off
+        led_blu_5: on
+        led_blu_6: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 4}:
+        led_grn_4: on
+        led_grn_5: off
+        led_blu_4: on
+        led_blu_5: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 3}:
+        led_grn_3: on
+        led_grn_4: off
+        led_blu_3: on
+        led_blu_4: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 2}:
+        led_grn_2: on
+        led_grn_3: off
+        led_blu_2: on
+        led_blu_3: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 1}:
+        led_grn_1: on
+        led_grn_2: off
+        led_blu_1: on
+        led_blu_2: off
+  timer_green_bonus_collect_timer_tick{ticks % 10 == 0}:
+        led_grn_1: off
+        led_blu_1: off
+        
+        
+
+  
+  
+  
+variable_player:
+
+# new multiplier values set in bluebonus and greenbonus modes.
+
+  start_ball_ending_show:
+    score: 1000 * current_player.green_collect_hit_total * current_player.blue_collect_hit_total
+
+  mode_bonus_collect_started:
+    blue_3x_bonus_pf_multiplier:
+      int: 1
+      action: set
+    green_3x_bonus_pf_multiplier:
+      int: 1
+      action: set
+      
+    blue_bonus_adv_multiplier:
+      int: 0
+      action: set
+    green_bonus_adv_multiplier:
+      int: 0
+      action: set
+      
+  timer_green_bonus_collect_timer_complete:   
+    green_collect_hit_total:
+      int: 0
+      action: set
+  timer_blue_bonus_collect_timer_complete:   
+    blue_collect_hit_total:
+      int: 0
+      action: set
+      
+  green_bonus_collect_count_done{count==1}:
+    green_collect_hit_total:
+      int: 1
+      action: set      
+  green_bonus_collect_count_done{count==2}:
+    green_collect_hit_total:
+      int: 2
+      action: set
+  green_bonus_collect_count_done{count==3}:
+    green_collect_hit_total:
+      int: 3
+      action: set
+  green_bonus_collect_count_done{count==4}:
+    green_collect_hit_total:
+      int: 4
+      action: set
+  green_bonus_collect_count_done{count==5}:
+    green_collect_hit_total:
+      int: 5
+      action: set
+  green_bonus_collect_count_done{count==6}:
+    green_collect_hit_total:
+      int: 6
+      action: set
+  green_bonus_collect_count_done{count==7}:
+    green_collect_hit_total:
+      int: 7
+      action: set
+  green_bonus_collect_count_done{count==8}:
+    green_collect_hit_total:
+      int: 8
+      action: set
+  green_bonus_collect_count_done{count==9}:
+    green_collect_hit_total:
+      int: 9
+      action: set
+  green_bonus_collect_count_done{count==10}:
+    green_collect_hit_total:
+      int: 10
+      action: set
+  green_bonus_collect_count_done{count==11}:
+    green_collect_hit_total:
+      int: 11
+      action: set
+  green_bonus_collect_count_done{count==12}:
+    green_collect_hit_total:
+      int: 12
+      action: set
+  green_bonus_collect_count_done{count==13}:
+    green_collect_hit_total:
+      int: 13
+      action: set
+  green_bonus_collect_count_done{count==14}:
+    green_collect_hit_total:
+      int: 14
+      action: set
+  green_bonus_collect_count_done{count==15}:
+    green_collect_hit_total:
+      int: 15
+      action: set
+  green_bonus_collect_count_done{count==16}:
+    green_collect_hit_total:
+      int: 16
+      action: set
+  green_bonus_collect_count_done{count==17}:
+    green_collect_hit_total:
+      int: 17
+      action: set
+  green_bonus_collect_count_done{count==18}:
+    green_collect_hit_total:
+      int: 18
+      action: set
+  green_bonus_collect_count_done{count==19}:
+    green_collect_hit_total:
+      int: 19
+      action: set
+  green_bonus_collect_count_done{count==20}:
+    green_collect_hit_total:
+      int: 20
+      action: set
+  green_bonus_collect_count_done{count==21}:
+    green_collect_hit_total:
+      int: 21
+      action: set
+  green_bonus_collect_count_done{count==22}:
+    green_collect_hit_total:
+      int: 22
+      action: set
+  green_bonus_collect_count_done{count==23}:
+    green_collect_hit_total:
+      int: 23
+      action: set
+  green_bonus_collect_count_done{count==24}:
+    green_collect_hit_total:
+      int: 24
+      action: set
+  green_bonus_collect_count_done{count==25}:
+    green_collect_hit_total:
+      int: 25
+      action: set
+  green_bonus_collect_count_done{count==26}:
+    green_collect_hit_total:
+      int: 26
+      action: set
+  green_bonus_collect_count_done{count==27}:
+    green_collect_hit_total:
+      int: 27
+      action: set
+  green_bonus_collect_count_done{count==28}:
+    green_collect_hit_total:
+      int: 28
+      action: set
+  green_bonus_collect_count_done{count==29}:
+    green_collect_hit_total:
+      int: 29
+      action: set
+  green_bonus_collect_count_done{count==30}:
+    green_collect_hit_total:
+      int: 30
+      action: set
+  green_bonus_collect_count_done{count==31}:
+    green_collect_hit_total:
+      int: 31
+      action: set
+  green_bonus_collect_count_done{count==32}:
+    green_collect_hit_total:
+      int: 32
+      action: set
+  green_bonus_collect_count_done{count==33}:
+    green_collect_hit_total:
+      int: 33
+      action: set
+  green_bonus_collect_count_done{count==34}:
+    green_collect_hit_total:
+      int: 34
+      action: set
+  green_bonus_collect_count_done{count==35}:
+    green_collect_hit_total:
+      int: 35
+      action: set
+  green_bonus_collect_count_done{count==36}:
+    green_collect_hit_total:
+      int: 36
+      action: set
+  green_bonus_collect_count_done{count==37}:
+    green_collect_hit_total:
+      int: 37
+      action: set
+  green_bonus_collect_count_done{count==38}:
+    green_collect_hit_total:
+      int: 38
+      action: set
+  green_bonus_collect_count_done{count==39}:
+    green_collect_hit_total:
+      int: 39
+      action: set
+  green_bonus_collect_count_done{count==40}:
+    green_collect_hit_total:
+      int: 40
+      action: set
+  green_bonus_collect_count_done{count==41}:
+    green_collect_hit_total:
+      int: 41
+      action: set
+  green_bonus_collect_count_done{count==42}:
+    green_collect_hit_total:
+      int: 42
+      action: set
+  green_bonus_collect_count_done{count==43}:
+    green_collect_hit_total:
+      int: 43
+      action: set
+  green_bonus_collect_count_done{count==44}:
+    green_collect_hit_total:
+      int: 44
+      action: set
+  green_bonus_collect_count_done{count==45}:
+    green_collect_hit_total:
+      int: 45
+      action: set
+  green_bonus_collect_count_done{count==46}:
+    green_collect_hit_total:
+      int: 46
+      action: set
+  green_bonus_collect_count_done{count==47}:
+    green_collect_hit_total:
+      int: 47
+      action: set
+  green_bonus_collect_count_done{count==48}:
+    green_collect_hit_total:
+      int: 48
+      action: set
+  green_bonus_collect_count_done{count==49}:
+    green_collect_hit_total:
+      int: 49
+      action: set
+  green_bonus_collect_count_done{count==50}:
+    green_collect_hit_total:
+      int: 50
+      action: set
+   
+  #green_bonus_collect_count_done:
+    #green_bonus_total_advance:    
+      #int: current_player.green_collect_hit_total
+      #action: set
+      
+  blue_bonus_collect_count_done{count==1}:
+    blue_collect_hit_total:
+      int: 1
+      action: set      
+  blue_bonus_collect_count_done{count==2}:
+    blue_collect_hit_total:
+      int: 2
+      action: set
+  blue_bonus_collect_count_done{count==3}:
+    blue_collect_hit_total:
+      int: 3
+      action: set
+  blue_bonus_collect_count_done{count==4}:
+    blue_collect_hit_total:
+      int: 4
+      action: set
+  blue_bonus_collect_count_done{count==5}:
+    blue_collect_hit_total:
+      int: 5
+      action: set
+  blue_bonus_collect_count_done{count==6}:
+    blue_collect_hit_total:
+      int: 6
+      action: set
+  blue_bonus_collect_count_done{count==7}:
+    blue_collect_hit_total:
+      int: 7
+      action: set
+  blue_bonus_collect_count_done{count==8}:
+    blue_collect_hit_total:
+      int: 8
+      action: set
+  blue_bonus_collect_count_done{count==9}:
+    blue_collect_hit_total:
+      int: 9
+      action: set
+  blue_bonus_collect_count_done{count==10}:
+    blue_collect_hit_total:
+      int: 10
+      action: set
+  blue_bonus_collect_count_done{count==11}:
+    blue_collect_hit_total:
+      int: 11
+      action: set
+  blue_bonus_collect_count_done{count==12}:
+    blue_collect_hit_total:
+      int: 12
+      action: set
+  blue_bonus_collect_count_done{count==13}:
+    blue_collect_hit_total:
+      int: 13
+      action: set
+  blue_bonus_collect_count_done{count==14}:
+    blue_collect_hit_total:
+      int: 14
+      action: set
+  blue_bonus_collect_count_done{count==15}:
+    blue_collect_hit_total:
+      int: 15
+      action: set
+  blue_bonus_collect_count_done{count==16}:
+    blue_collect_hit_total:
+      int: 16
+      action: set
+  blue_bonus_collect_count_done{count==17}:
+    blue_collect_hit_total:
+      int: 17
+      action: set
+  blue_bonus_collect_count_done{count==18}:
+    blue_collect_hit_total:
+      int: 18
+      action: set
+  blue_bonus_collect_count_done{count==19}:
+    blue_collect_hit_total:
+      int: 19
+      action: set
+  blue_bonus_collect_count_done{count==20}:
+    blue_collect_hit_total:
+      int: 20
+      action: set
+  blue_bonus_collect_count_done{count==21}:
+    blue_collect_hit_total:
+      int: 21
+      action: set
+  blue_bonus_collect_count_done{count==22}:
+    blue_collect_hit_total:
+      int: 22
+      action: set
+  blue_bonus_collect_count_done{count==23}:
+    blue_collect_hit_total:
+      int: 23
+      action: set
+  blue_bonus_collect_count_done{count==24}:
+    blue_collect_hit_total:
+      int: 24
+      action: set
+  blue_bonus_collect_count_done{count==25}:
+    blue_collect_hit_total:
+      int: 25
+      action: set
+  blue_bonus_collect_count_done{count==26}:
+    blue_collect_hit_total:
+      int: 26
+      action: set
+  blue_bonus_collect_count_done{count==27}:
+    blue_collect_hit_total:
+      int: 27
+      action: set
+  blue_bonus_collect_count_done{count==28}:
+    blue_collect_hit_total:
+      int: 28
+      action: set
+  blue_bonus_collect_count_done{count==29}:
+    blue_collect_hit_total:
+      int: 29
+      action: set
+  blue_bonus_collect_count_done{count==30}:
+    blue_collect_hit_total:
+      int: 30
+      action: set
+  blue_bonus_collect_count_done{count==31}:
+    blue_collect_hit_total:
+      int: 31
+      action: set
+  blue_bonus_collect_count_done{count==32}:
+    blue_collect_hit_total:
+      int: 32
+      action: set
+  blue_bonus_collect_count_done{count==33}:
+    blue_collect_hit_total:
+      int: 33
+      action: set
+  blue_bonus_collect_count_done{count==34}:
+    blue_collect_hit_total:
+      int: 34
+      action: set
+  blue_bonus_collect_count_done{count==35}:
+    blue_collect_hit_total:
+      int: 35
+      action: set
+  blue_bonus_collect_count_done{count==36}:
+    blue_collect_hit_total:
+      int: 36
+      action: set
+  blue_bonus_collect_count_done{count==37}:
+    blue_collect_hit_total:
+      int: 37
+      action: set
+  blue_bonus_collect_count_done{count==38}:
+    blue_collect_hit_total:
+      int: 38
+      action: set
+  blue_bonus_collect_count_done{count==39}:
+    blue_collect_hit_total:
+      int: 39
+      action: set
+  blue_bonus_collect_count_done{count==40}:
+    blue_collect_hit_total:
+      int: 40
+      action: set
+  blue_bonus_collect_count_done{count==41}:
+    blue_collect_hit_total:
+      int: 41
+      action: set
+  blue_bonus_collect_count_done{count==42}:
+    blue_collect_hit_total:
+      int: 42
+      action: set
+  blue_bonus_collect_count_done{count==43}:
+    blue_collect_hit_total:
+      int: 43
+      action: set
+  blue_bonus_collect_count_done{count==44}:
+    blue_collect_hit_total:
+      int: 44
+      action: set
+  blue_bonus_collect_count_done{count==45}:
+    blue_collect_hit_total:
+      int: 45
+      action: set
+  blue_bonus_collect_count_done{count==46}:
+    blue_collect_hit_total:
+      int: 46
+      action: set
+  blue_bonus_collect_count_done{count==47}:
+    blue_collect_hit_total:
+      int: 47
+      action: set
+  blue_bonus_collect_count_done{count==48}:
+    blue_collect_hit_total:
+      int: 48
+      action: set
+  blue_bonus_collect_count_done{count==49}:
+    blue_collect_hit_total:
+      int: 49
+      action: set
+  blue_bonus_collect_count_done{count==50}:
+    blue_collect_hit_total:
+      int: 50
+      action: set
+   
+  #blue_bonus_collect_count_done:
+    #blue_bonus_total_advance:    
+      #int: current_player.blue_collect_hit_total
+      #action: set
+
+#the left outlane, right return
+#lane,and the green inline targets advance from 1 to 3 advances 
+     
+  
+  green_adv_bonus_count_done{count==1}:
+    green_bonus_adv_multiplier:
+      int: 1
+      action: set  
+  green_adv_bonus_count_done{count==2}:
+    green_bonus_adv_multiplier:
+      int: 2
+      action: set  
+      
+  
+  blue_adv_bonus_count_done{count==1}:
+    blue_bonus_adv_multiplier:
+      int: 1
+      action: set  
+  blue_adv_bonus_count_done{count==2}:
+    blue_bonus_adv_multiplier:
+      int: 2
+      action: set
+      
+sound_player:
+  timer_green_bonus_collect_timer_started:
+    bonus_sound:
+      action: play
+      loops: -1
+  timer_green_bonus_collect_timer_complete:
+    bonus_sound:
+      action: stop
+
+        
+    

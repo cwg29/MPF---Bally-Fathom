@@ -1,0 +1,96 @@
+#config_version=5
+##! mode: greenbonus
+
+#FATHOM
+
+mode:
+  start_events: start_mode_greenbonus
+  stop_events: stop_mode_greenbonus
+  priority: 450
+  
+ 
+event_player:
+  mode_greenbonus_started: initialize_greenbonus
+  drop_green_3x_shot_hit: green_3x_bonus_active
+  drop_green_plus1x_shot_hit: green_plus1x_count_up
+  green_plus1x_count_done{count==2}: green_plus1x_raise_again
+  green_plus1x_count_done{count==3}: green_plus1x_5x_mltpr
+  
+  
+shots:
+  drop_green_3x_shot:
+    switch: s_grn_drop_target_3x
+    enable: mode_ball_starting_show_ended
+    disable: start_ball_starting_show
+    profile: flash_profile
+    
+  drop_green_plus1x_shot:
+    switch: s_grn_drop_target_plus1x
+    enable: mode_ball_starting_show_ended
+    disable: start_ball_starting_show    
+    profile: flash_profile
+
+
+### Since Fathom typically has a 3 inline drop target assembly but this Fathom only
+###  has 2 inline targets, the 2nd target (plus1x) needs to be hit twice to achieve
+###  the 5x multiplier.
+    
+counters:
+  green_plus1x_count:
+    count_events: green_plus1x_count_up 
+    events_when_hit: green_plus1x_count_done
+    starting_count: 1
+    direction: up
+    count_complete_value: 4
+    reset_on_complete: true
+    persist_state: true
+    start_enabled: true
+    disable_on_complete: false
+    restart_events: green_plus1x_count_complete  ###green_inline_bank_reset
+    
+timers:
+  green_plus1x_raise_again_timer:
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: green_plus1x_raise_again
+      - action: reset
+        event: timer_green_plus1x_raise_again_timer_complete
+    
+coil_player:
+  green_plus1x_raise_again_timer_done: c_drop_target_grn_1X  
+    
+    
+    
+variable_player:
+  green_3x_bonus_active:
+    green_3x_bonus_pf_multiplier:
+      int: 3
+      action: set
+  
+  green_plus1x_raise_again:
+    green_3x_bonus_pf_multiplier:
+      int: 4
+      action: set
+      
+  green_plus1x_5x_mltpr:
+    green_3x_bonus_pf_multiplier:
+      int: 4
+      action: set
+    
+light_player:
+  green_3x_bonus_active:
+        led_grn_3X:
+            color: green
+            fade: 500ms
+  green_plus1x_raise_again:
+        led_grn_4X:
+            color: orange
+            fade: 500ms
+  green_plus1x_5x_mltpr:
+        led_grn_5X:
+            color: white
+            fade: 500ms
