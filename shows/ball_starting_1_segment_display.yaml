@@ -1,0 +1,21 @@
+#show_version=5
+- duration: 5s
+  segment_displays:
+    neoSegTop:
+      text: "  AHH     YES   "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+    neoSegBot:
+      text: "  BALL    No 1  "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+
+
+
+
+
+

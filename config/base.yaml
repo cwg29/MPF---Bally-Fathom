@@ -1,0 +1,950 @@
+#config_version=5
+##! mode: base
+
+#FATHOM
+
+
+mode:
+    start_events: ball_will_start #{ball>1}
+    stop_events: ball_will_stop
+    priority: 100
+    #start_events: start_base #, ball_starting{ball>1}  #ball_will_start     # in normal mode use ball_started instead
+
+    
+queue_relay_player:
+  ball_starting:
+    post: start_ball_starting_show
+    wait_for: mode_ball_starting_show_ended
+  ball_starting{current_player.ball==1}:
+    post: start_ball_1_starting_voice_show
+    wait_for: mode_ball_1_starting_voice_show_ended
+  ball_ending:
+    post: start_ball_ending_show
+    wait_for: timer_green_bonus_collect_timer_complete
+  #ball_ended{current_player.ball==3 and not is_extra_ball}:
+    #post: start_ball_ending_voice_show
+    #wait_for: mode_ball_ending_voice_show_ended
+ 
+ 
+show_player:
+  #flipper_cancel:
+    #ball_starting_light_show: stop
+    #ball_ending_light_show: stop
+    start_ball_starting_show:
+        ball_starting_show:
+            loops: 0
+            #speed: 1
+            events_when_stopped: mode_ball_starting_show_ended
+    start_ball_starting_show.1:
+        ball_starting_light_show:
+            loops: 0
+            speed: 25
+    start_ball_starting_show.2:
+        ball_starting_segment_show:
+            loops: 1
+            speed: 1
+    start_ball_1_starting_voice_show.1:
+        ball_shoot_light_show:
+            loops: 0
+            speed: 25
+    ball_starting{ball==1}:
+        ball_starting_1_segment_display:
+            loops: 1
+            speed: 1
+            priority: 2
+    ball_starting{ball==2}:
+        ball_starting_2_segment_display:
+            loops: 1
+            speed: 1
+            priority: 2
+    ball_starting{ball==3}:
+        ball_starting_3_segment_display:
+            loops: 1
+            speed: 1
+            priority: 2
+ # ball_starting{ball==3}:
+ #   ball_shoot_light_show:
+ #     loops: 0
+ #     speed: 25
+    ball_will_end:
+        ball_shoot_light_show:
+            loops: 0
+            speed: 30
+
+    start_ball_ending_show:
+        ball_ending_show:
+            loops: 0
+            speed: 5
+            events_when_stopped: mode_ball_ending_show_ended
+    start_ball_1_starting_voice_show:
+        ball_1_starting_voice_show:
+            loops: 0
+            events_when_stopped: mode_ball_1_starting_voice_show_ended
+    #start_ball_ending_voice_show:
+        #ball_ending_voice_show:
+            #loops: 0
+            #speed: 5
+            #events_when_stopped: mode_ball_ending_voice_show_ended
+ 
+ ########################################################################
+ ### Show Player - Run the segment displays with player score values  ###
+ ########################################################################
+
+    ball_started{player==1 and (ball>1 or is_extra_ball==True)}:
+        P1_scoreFlash:
+            show_tokens:
+                txt: "{(players[0].score):>8,d}"
+            key: scoreFlash
+            priority: 2
+            speed: 3
+    ball_started{player==2 and (ball>1 or is_extra_ball==True)}:
+        P2_scoreFlash:
+            show_tokens:
+                txt: "{(players[1].score):>8,d}"
+            key: scoreFlash
+            priority: 2
+            speed: 3
+    ball_started{player==3 and (ball>1 or is_extra_ball==True)}:
+        P3_scoreFlash:
+            show_tokens:
+                txt: "{(players[2].score):>8,d}"
+            key: scoreFlash
+            priority: 2
+            speed: 3
+    ball_started{player==4 and (ball>1 or is_extra_ball==True)}:
+        P4_scoreFlash:
+            show_tokens:
+                txt: "{(players[3].score):>8,d}"
+            key: scoreFlash
+            priority: 2
+            speed: 3
+
+    ball_started{player!=1}:
+        P1_score:
+            show_tokens:
+                txt: "{(players[0].score):>8,d}"
+            key: p1score
+    ball_started{player!=2 and game.num_players > 1}:
+        P2_score:
+            show_tokens:
+                txt: "{(players[1].score):>8,d}"
+            key: p2score
+    ball_started{player!=3 and game.num_players > 2}:
+        P3_score:
+            show_tokens:
+                txt: "{(players[2].score):>8,d}"
+            key: p3score
+    ball_started{player!=4 and game.num_players > 3}:
+        P4_score:
+            show_tokens:
+                txt: "{(players[3].score):>8,d}"
+            key: p4score
+    ball_started{player!=2 and game.num_players > 1 and players[1].score == 0}:
+        P2_score:
+            show_tokens:
+                txt: "      00"
+            key: p2score0
+            priority: 3
+    ball_started{player!=3 and game.num_players > 2 and players[2].score == 0}:
+        P3_score:
+            show_tokens:
+                txt: "      00"
+            key: p3score0
+            priority: 3
+    ball_started{player!=4 and game.num_players > 3 and players[3].score == 0}:
+        P4_score:
+            show_tokens:
+                txt: "      00"
+            key: p4score0
+            priority: 3
+
+    player_score{player_num==1 and value>0}:
+        scoreFlash: stop
+        P1_score:
+            show_tokens:
+                txt: "{(players[0].score):>8,d}"
+            key: p1score
+    player_score{player_num==2 and value>0}:
+        scoreFlash: stop
+        P2_score:
+            show_tokens:
+                txt: "{(players[1].score):>8,d}"
+            key: p2score
+    player_score{player_num==3 and value>0}:
+        scoreFlash: stop
+        P3_score:
+            show_tokens:
+                txt: "{(players[2].score):>8,d}"
+            key: p3score
+    player_score{player_num==4 and value>0}:
+        scoreFlash: stop
+        P4_score:
+            show_tokens:
+                txt: "{(players[3].score):>8,d}"
+            key: p4score
+
+    ball_started{player==1 and ball==1 and is_extra_ball==False}:
+        P1_scoreFlash:
+            show_tokens:
+                txt: "      00"
+            key: scoreFlash
+            priority: 3
+            speed: 3
+    ball_started{player==2 and ball==1 and is_extra_ball==False}:
+        P2_scoreFlash:
+            show_tokens:
+                txt: "      00"
+            key: scoreFlash
+            priority: 3
+            speed: 3
+    ball_started{player==3 and ball==1 and is_extra_ball==False}:
+        P3_scoreFlash:
+            show_tokens:
+                txt: "      00"
+            key: scoreFlash
+            priority: 3
+            speed: 3
+    ball_started{player==4 and ball==1 and is_extra_ball==False}:
+        P4_scoreFlash:
+            show_tokens:
+                txt: "      00"
+            key: scoreFlash
+            priority: 3
+            speed: 3
+            
+    player_added{num==2}:
+        P2_score:
+            show_tokens:
+                txt: "      00"
+            key: p2scoreadd
+            priority: 3
+    player_added{num==3}:
+        P3_score:
+            show_tokens:
+                txt: "      00"
+            key: p3scoreadd
+            priority: 3
+    player_added{num==4}:
+        P4_score:
+            show_tokens:
+                txt: "      00"
+            key: p4scoreadd
+            priority: 3
+            
+    #single_player_ball_started:
+    ball_started:
+        credit_display:
+            show_tokens:
+                txt: "{(machine.credit_units):>2,d}"
+        ball_display:
+            show_tokens:
+                txt: "{(players[0].ball):>2,d}"
+
+            
+
+      
+shows:
+    ball_starting_show:
+        - duration: 3s
+    #ball_starting_light_show:
+        #- duration: 3s
+    ball_ending_show:
+        - duration: 10s
+    #ball_ending_voice_show:
+        #- duration: 5s
+    ball_1_starting_voice_show:
+        - duration: 3s
+#####################################################        
+###  Shows - Segment display show score values   ####
+#####################################################
+    
+    P1_score:
+        - duration: -1
+          segment_displays:
+            neoSegP1:
+                text: (txt)
+    P2_score:
+        - duration: -1
+          segment_displays:
+            neoSegP2:
+                text: (txt)
+    P3_score:
+        - duration: -1
+          segment_displays:
+            neoSegP3:
+                text: (txt)
+    P4_score:
+        - duration: -1
+          segment_displays:
+            neoSegP4:
+                text: (txt)
+    P1_scoreFlash:
+        - duration: 0.75
+          segment_displays:
+            neoSegP1:
+                text: (txt)
+        - duration: 0.25
+          segment_displays:
+            neoSegP1:
+                text: "        "
+    P2_scoreFlash:
+        - duration: 0.75
+          segment_displays:
+            neoSegP2:
+                text: (txt)
+        - duration: 0.25
+          segment_displays:
+            neoSegP2:
+                text: "        "
+    P3_scoreFlash:
+        - duration: 0.75
+          segment_displays:
+            neoSegP3:
+                text: (txt)
+        - duration: 0.25
+          segment_displays:
+            neoSegP3:
+                text: "        "
+    P4_scoreFlash:
+        - duration: 0.75
+          segment_displays:
+            neoSegP4:
+                text: (txt)
+        - duration: 0.25
+          segment_displays:
+            neoSegP4:
+                text: "        "
+                
+    ball_display:
+        - duration: -1
+          segment_displays:
+            neoSegball:
+                text: (txt)
+
+    credit_display:
+        - duration: -1
+          segment_displays:
+            neoSegcredit:
+                text: (txt)
+
+event_player:
+  mode_base_started:
+    #- start_mode_skillshot
+    - start_mode_awards
+    - start_mode_lane_change
+    - start_mode_extra_ball
+    - start_mode_bonus_collect
+    - start_mode_popbmpr
+    - start_mode_sixdropbank
+    - start_mode_ctrdropbank
+    - start_mode_cavetrap
+    - start_mode_lagoontrap
+    - start_mode_bluebonus
+    - start_mode_greenbonus
+    - start_mode_spinner
+    - start_mode_star_lane
+    - start_mode_spec_lanes
+    #- start_mode_high_score
+    - initialize_base
+    
+    
+light_player:
+
+    ball_starting:
+        bb_ball_in_play:
+            color: white
+            fade: 500ms
+    
+    all_trap_multiball_complete:
+        led_ctr_spec_wlit:
+            color: red
+            fade: 500ms
+
+ ###shoot again
+    ball_save_shoot_again_enabled:
+        led_shoot_again:
+            color: red
+            fade: 1000ms
+ #   ball_save_shoot_again_hurry_up:
+ #       l_led1:
+ #           color: red
+  #          fade: 500ms
+    ball_save_shoot_again_disabled:
+        led_shoot_again:
+            color: off
+            fade: 500ms
+    mode_base_started:
+        gi:
+            color: white
+            fade: 500ms
+        bb_gi:
+            color: white
+            fade: 1000ms
+        led_apron:
+            color: green
+            fade: 1000ms
+        bb_fathom:
+            color: green
+            fade: 1000ms
+        led_rt_bnk_grn:
+            color: green
+            fade: 1000ms
+        led_top_bnk_blue:
+            color: blue
+            fade: 1000ms
+        led_ctr_bnk_yel:
+            color: yellow
+            fade: 1000ms
+        led_lf_bnk_grn:
+            color: green
+            fade: 1000ms
+        led_lf_bnk_blue:
+            color: blue
+            fade: 1000ms
+        led_octopus:
+            color: green
+            fade: 1000ms
+        
+        
+        
+            
+
+            
+shot_profiles:
+  flash:
+    states:
+      - name: unlit
+        show: "off"
+      - name: lit
+        show: "flash"
+            
+# show to flash an LED
+#shows:
+  #flash_light:
+    #- time: 0
+      #lights:
+        #l_led1: red
+    #- time: 1
+      #lights:
+        #l_led1: blue
+
+
+    
+
+
+sounds:
+  spinner_sound:
+    file: spinner2.wav
+    volume: 0.7
+    simultaneous_limit: 3
+    max_que_time: 0s
+  spinner_bonus_sound:
+    file: spinner3.wav
+    volume: 0.7
+    simultaneous_limit: 3
+    max_que_time: 0s
+  level_1_achievement_sound:
+    file: mega-bassy-echo-fx_A_major_ph.wav
+    volume: 0.2
+    simultaneous_limit: 3
+    max_que_time: 2s
+  1_2_3_ctr_drop_bank_sound:
+    file: pulse_2x.wav
+    volume: 0.4
+    simultaneous_limit: 1
+    max_que_time: 1s
+  castle_wall_sound:
+    file: loud-e-guitar-lick_E_major_2.wav
+    volume: 0.4
+    simultaneous_limit: 1
+    max_que_time: 1s
+  ctr_drop_target_sound:
+    file: ctr_target.wav
+    volume: 0.5
+    simultaneous_limit: 2
+    max_que_time: 0s
+  lane_drop_target_sound:
+    file: lane_target.wav
+    volume: 0.5
+    simultaneous_limit: 1
+    max_que_time: 0s
+  left_drop_target_sound:
+    file: left_target.wav
+    volume: 0.5
+    simultaneous_limit: 2
+    max_que_time: 0s
+  pop_1_sound:
+    file: pop_bumper1.wav
+    volume: 0.5
+    simultaneous_limit: 2
+    max_que_time: 0s
+  pop_2_sound:
+    file: pop_bumper2.wav
+    volume: 0.5
+    simultaneous_limit: 2
+    max_que_time: 0s
+  outer_orbit_sound:
+    file: gtr_81_quackscape_short4.wav
+    volume: 0.3
+    simultaneous_limit: 1
+    max_que_time: 0s
+  inner_orbit_sound:
+    file: gtr_81_quackscape_short4f.wav
+    volume: 0.3
+    simultaneous_limit: 1
+    max_que_time: 0s
+  slingshot_sound:
+    file: sling2.wav
+    volume: 0.3
+    simultaneous_limit: 2
+    max_que_time: 0s
+  abc roll_over_sound:
+    file: abc_roll_2.wav
+    volume: 0.3
+    simultaneous_limit: 1
+    max_que_time: 0s
+  drain roll_over_sound:
+    file: drain_rollover.wav
+    volume: 0.3
+    simultaneous_limit: 1
+    max_que_time: 0s
+  star roll_over_sound:
+    file: chirp.wav
+    volume: 0.3
+    simultaneous_limit: 1
+    max_que_time: 0s
+  roll_over_sound_2:
+    file: outer_rollover.wav
+    volume: 0.3
+    simultaneous_limit: 2
+    max_que_time: 0s
+  target_sound:
+    file: psy-effect-spaceship-fx-8_C_major.wav
+    volume: 0.3
+    simultaneous_limit: 4
+    max_que_time: 0s
+  saucer_sound:
+    file: pulse_2step.wav
+    volume: 0.3
+    simultaneous_limit: 1
+    max_que_time: 0s
+  bonus_sound:
+    file: bonus_collect.wav
+    volume: 0.3
+    simultaneous_limit: 1
+    max_que_time: 0s
+  abc_done_sound:
+    file: pulse_2step_hi.wav
+    volume: 0.3
+    simultaneous_limit: 1
+    max_que_time: 0s
+  level_1_music_1:
+    file: fathom_lvl1_loop.wav
+    Volume: 0.3
+    simultaneous_limit: 1
+    stealing_method: skip
+    mode_end_action: stop
+    streaming: true
+  level_abc_music_1:
+    file: fathom_abc_loop.wav
+    Volume: 0.5
+    simultaneous_limit: 1
+    stealing_method: skip
+    mode_end_action: stop
+    streaming: true
+  #intro_music_1:
+    #file: ws_bass_drop_is_coming.wav
+    #Volume: 0.5
+    #simultaneous_limit: 2
+  intro_fathom_boot:
+    file: fathom_boot_intro.wav
+    Volume: 0.5
+    simultaneous_limit: 2
+    #stealing_method: skip
+    #mode_end_action: stop
+    #streaming: true    
+  #the_keep_complete_voice:
+    #file: mcp_escaped_thru_the_keep_1.wav
+    #Volume: 0.9
+    #simultaneous_limit: 1
+    #ducking:
+      #target: music
+      #delay: 0
+      #attack: 0.3 sec
+      #attenuation: -20db
+      #release_point: 4.0 sec
+      #release: 3.0 sec
+  player_start_voice:
+    file: ah_yes.wav
+    Volume: 0.9
+    simultaneous_limit: 1
+  player_start_trickle:
+    file: trickle.wav
+    Volume: 0.9
+    simultaneous_limit: 1
+  death_dive_voice:
+    file: death_dive.wav
+    Volume: 1.0
+    simultaneous_limit: 1
+  ah_attack_voice:
+    file: ah_attack.wav
+    Volume: 1.0
+    simultaneous_limit: 1
+  game_over_voice:
+    file: dive_again.wav
+    Volume: 0.8
+    simultaneous_limit: 1
+  multi_ball_ready_voice:
+    file: sea_nympths_await.wav
+    Volume: 1.0
+    simultaneous_limit: 1
+  #game_rematch_voice:
+    #file: mcp_so_sorry_rematch_3_s.wav
+    #Volume: 0.8
+    #simultaneous_limit: 1
+  #game_power_voice:
+    #file: mcp_power_Ive_given_2_s.wav
+    #Volume: 0.8
+    #simultaneous_limit: 1
+  game_extra_ball_voice:
+    file: air_tanks_refilled.wav
+    Volume: 0.8
+    simultaneous_limit: 1
+  cave_trap_voice:
+    file: mermaids_trap.wav
+    Volume: 0.8
+    simultaneous_limit: 1
+  cave_trap_escape_voice:
+    file: mermaids_revenge.wav
+    Volume: 0.8
+    simultaneous_limit: 1
+    priority: 2
+  lagoon_trap_voice:
+    file: sea_nympths_trap.wav
+    Volume: 0.8
+    simultaneous_limit: 1
+  lagoon_trap_escape_voice:
+    file: sea_nympths_release.wav
+    Volume: 0.8
+    simultaneous_limit: 1
+    priority: 3
+  extra_ball_voice:
+    file: now_youve_dunnit.wav
+    Volume: 0.8
+    simultaneous_limit: 1
+  saved_ball_voice:
+    file: help_me.wav
+    Volume: 0.7
+    simultaneous_limit: 1
+  saved_ball_voice_2:
+    file: help_surface.wav
+    Volume: 0.7
+    simultaneous_limit: 1
+  lane_change_2_voice:
+    file: great_neptune.wav
+    Volume: 0.7
+    simultaneous_limit: 1
+  lane_change_3_voice:
+    file: laugh_revenge.wav
+    Volume: 0.7
+    simultaneous_limit: 1
+    priority: 10
+  multi_ball_ending_voice:
+    file: air_supply_gone.wav
+    Volume: 0.7
+    simultaneous_limit: 1
+    priority: 10
+  multi_ball_trap_ending_voice:
+    file: air_gone.wav
+    Volume: 0.7
+    simultaneous_limit: 1
+    priority: 3
+  high_score_music_1:
+    file: genghis_khan.wav
+    Volume: 1
+    simultaneous_limit: 1
+    #stealing_method: skip
+    #mode_end_action: stop
+    streaming: true 
+  #ending_ball_voice:
+    #file: mcp_eradicated_1_s.wav
+    #Volume: 0.7
+    #simultaneous_limit: 1
+    
+sound_pools:
+  ball_save_callout:
+    type: random_force_all
+    track: voice
+    sounds:
+      - saved_ball_voice
+      - saved_ball_voice_2
+    
+    
+sound_player:
+  
+  start_ball_starting_show: player_start_trickle
+  ball_starting:
+    intro_fathom_boot:
+      action: stop
+      fade_out: 1s
+  
+  start_ball_1_starting_voice_show: player_start_voice
+    #intro_music_1:
+      #action: play
+      #fade_out: 1s
+      #block: true
+      #loops: 1
+  #mode_the_keep_started:
+    #ym_slow_fast:
+      #action: stop
+      #fade_out: 1s
+  ball_starting{ball==2}: game_over_voice
+#  ball_starting{ball==3}: game_power_voice
+#  timer_timer_down_rematch_complete: game_extra_ball_voice
+#  ball_drain: ending_ball_voice   
+  mode_ball_starting_show_ended:
+ #   ym_slow_fast:
+ #     action: stop
+ #     fade_out: 1s
+    level_1_music_1:
+      action: play
+      fade_in: 4s
+      loops: -1
+  start_ball_ending_voice_show: game_over_voice
+  
+  timer_abc_multiball_start_escape_timer_complete:
+    level_1_music_1:
+      action: stop
+      fade_out: 1s
+      loops: -1
+    level_abc_music_1:
+      action: play
+      fade_in: 3s
+      loops: -1
+  timer_abc_multiball_show_timer_complete:
+    level_abc_music_1:
+      action: stop
+      fade_out: 1s
+      loops: -1
+    level_1_music_1:
+      action: play
+      fade_in: 3s
+      loops: -1
+  
+  s_startbutton_active: star roll_over_sound 
+  s_left_drop1_target_1_active: left_drop_target_sound
+  s_left_drop1_target_2_active: left_drop_target_sound
+  s_left_drop1_target_3_active: left_drop_target_sound
+  s_left_drop2_target_1_active: left_drop_target_sound
+  s_left_drop2_target_2_active: left_drop_target_sound
+  s_left_drop2_target_3_active: left_drop_target_sound
+  s_grn_drop_target_3x_active: lane_drop_target_sound
+  s_grn_drop_target_plus1x_active: lane_drop_target_sound
+  s_blu_drop_target_3x_active: lane_drop_target_sound
+  s_blu_drop_target_plus1x_active: lane_drop_target_sound  
+  s_left_sling_shot_active: slingshot_sound 
+  s_right_sling_shot_active: slingshot_sound
+  s_left_pop_bumper_active: pop_1_sound
+  s_right_pop_bumper_active: pop_2_sound 
+  s_lower_pop_bumper_active: pop_1_sound
+  s_ctr_drop_target_1_active: ctr_drop_target_sound 
+  s_ctr_drop_target_2_active: ctr_drop_target_sound
+  s_ctr_drop_target_3_active: ctr_drop_target_sound
+  s_ro_right_lwr_in_active: drain roll_over_sound
+  s_ro_left_lwr_in_active: drain roll_over_sound
+  s_right_star_1_active: star roll_over_sound 
+  s_right_star_2_active: star roll_over_sound
+  s_left_star_1_active: star roll_over_sound
+  s_left_star_2_active: star roll_over_sound
+  s_left_star_3_active: star roll_over_sound
+  s_ro_upper_a_active: abc roll_over_sound
+  s_ro_upper_b_active: abc roll_over_sound
+  s_ro_upper_c_active: abc roll_over_sound  
+  s_right_standup_target_active: target_sound
+  s_ro_left_lwr_out_active: roll_over_sound_2
+  s_ro_right_lwr_out_active: roll_over_sound_2
+  s_right_saucer_active: saucer_sound
+  s_top_saucer_active: saucer_sound
+  lane_change_on_complete: abc_done_sound
+  drop_target_bank_ctr_bank_down: 1_2_3_ctr_drop_bank_sound
+  ctr_drop_target_seq_1_2_3_achieved: game_extra_ball_voice
+  cave_trap_ready_to_be_set: cave_trap_voice
+  timer_cave_trap_start_escape_timer_complete: cave_trap_escape_voice
+  lagoon_trap_ready_to_be_set: lagoon_trap_voice
+  timer_lagoon_trap_start_escape_timer_complete: lagoon_trap_escape_voice
+  eb_voice_call: extra_ball_voice
+  drop_target_bank_left_bank1_down: 1_2_3_ctr_drop_bank_sound
+  left_blue_bank_shot_on_complete: ah_attack_voice
+  left_green_bank_shot_on_complete: death_dive_voice
+  ball_save_shoot_again_saving_ball: ball_save_callout
+  abc_lanes_done{count==2}: lane_change_2_voice
+  abc_lanes_done{count==3}: multi_ball_ready_voice
+  timer_abc_multiball_start_escape_timer_complete.1: lane_change_3_voice
+  timer_abc_multiball_show_timer_complete.1: multi_ball_ending_voice
+  timer_lagoon_trap_multiball_show_timer_complete.1: multi_ball_trap_ending_voice
+  timer_cave_trap_multiball_show_timer_complete.1: multi_ball_trap_ending_voice
+  #spinner_fathom_spinner_hit{current_player.pf_spinner_multiplier==1}: spinner_sound
+  #spinner_fathom_spinner_hit{current_player.pf_spinner_multiplier==5}: spinner_bonus_sound
+
+      
+ball_saves:
+  shoot_again:
+    active_time: 10s
+    hurry_up_time: 4s
+    grace_period: 2s
+    enable_events:
+      - stage_4_abc_lanes_complete
+      - timer_timer_down_ball_save_started
+      - left_blue_trap_release_set
+      - left_green_trap_release_set
+      #- timer_lagoon_trap_multiball_show_timer_started
+      #- timer_cave_trap_multiball_show_timer_started      
+    #timer_start_events: timer_timer_down_ball_save_started #balldevice_bd_plunger_ball_eject_success
+    auto_launch: true
+    balls_to_save: 1
+    eject_delay: 1s
+    #only_last_ball: true
+    
+multiballs:
+  cave_trap_ball:
+    ball_count: 1
+    ball_count_type: add
+    shoot_again: 1
+    enable_events: cave_trap_open
+    start_events: timer_cave_trap_start_escape_timer_complete  # maybe a voice show stops first?
+    stop_events:  timer_cave_trap_multiball_show_timer_complete
+    ball_locks: bd_right_saucer
+    
+  lagoon_trap_ball:
+    ball_count: 1
+    ball_count_type: add
+    shoot_again: 1
+    enable_events: lagoon_trap_open
+    start_events: timer_lagoon_trap_start_escape_timer_complete  # maybe a voice show stops first?
+    stop_events:  timer_lagoon_trap_multiball_show_timer_complete
+    ball_locks: bd_top_saucer
+  
+  abc_lane_ball: #on lane change count 3
+    ball_count: 1
+    ball_count_type: add
+    shoot_again: 1
+    enable_events: abc_lanes_done{count==3}
+    start_events: timer_abc_multiball_start_escape_timer_complete  # maybe a different tune?
+    stop_events:  timer_abc_multiball_show_timer_complete
+    
+    
+  
+    
+    
+extra_balls:
+  extra_ball_eb:
+    award_events: extra_ball_award_achieved
+    
+#sequences:
+  #ball_lost:
+    #events:
+      #- ball_save_shoot_again_disabled, ball_drain
+      #- ball_drain
+    #events_when_complete: ball_lost_done
+    
+timers:
+  timer_down_start_video:
+    start_value: 5
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: no
+    control_events:
+        - event: start_ball_starting_show
+          action: start
+        - event: timer_timer_down_start_video_complete
+          action: reset
+  timer_down_ball_save:
+    start_value: 12
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: no
+    control_events:
+        - event: timer_timer_down_start_video_complete
+          action: start
+        - event: timer_timer_down_ball_save_complete
+          action: reset
+ # timer_down_rematch:
+#    debug: False
+#    bcp: True
+ #   start_value: 3
+ #   end_value: 0
+ #   direction: down
+ #   tick_interval: 1s
+ #   start_running: no
+#    control_events:
+#        - event: ball_starting{is_extra_ball}
+ #         action: start
+#        - event: timer_timer_down_rematch_complete
+ #         action: reset
+          
+ # timer_down_bonus_reset:
+ #   debug: False
+ #   bcp: True
+ #   start_value: 2
+ #   end_value: 0
+ #  direction: down
+  #  tick_interval: 1s
+ #   start_running: no
+ #   control_events:
+ #       - event: ball_starting
+  #        action: start
+ #       - event: timer_timer_down_bonus_reset_complete
+ #         action: reset
+ 
+
+
+slide_player:
+    #single_player_ball_started: slide_1
+    mode_base_started:
+      widgets:
+        #- type: text
+        #  text: (score)
+        #  number_grouping: true
+        #  min_digits: 2
+        #  font_size: 140
+        #  z: 2
+        #- type: text
+        #  text: P1 (machine|player1_score)
+        #  y: 10
+        #  x: right-25
+        #  z: 2
+        #  anchor_x: right
+        #  anchor_y: bottom
+        #  font_size: 50
+        - type: video
+          video: attract_loop_video
+          height: 720
+          width: 1280
+          auto_play: true
+          end_behavior: loop
+          z: 2
+    ball_save_shoot_again_saving_ball: ball_saved_reshoot
+    ball_save_shoot_again_enabled:
+      ball_saved_reshoot:
+        action: remove
+        transition:
+          type: fade
+          duration: 1s
+              
+slides:
+  ball_saved_reshoot:
+    widgets:
+      - type: video
+        video: ball_saved_video
+        height: 720
+        width: 1280
+        z: 12
+    expire: 5s
+    transition_out:
+      type: fade
+      duration: 1s
+
+
+

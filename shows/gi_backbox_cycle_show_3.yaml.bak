@@ -1,0 +1,552 @@
+#show_version=5
+##! show: gi_backbox_cycle_show_3
+- time: 0
+  lights:
+    l_bb_gi_34: 'FFFFFF'
+    l_bb_gi_35: 'FFFFFF'
+    l_bb_gi_36: 'FFFFFF'
+    l_bb_gi_37: 'FFFFFF'
+    l_bb_gi_38: 'FFFFFF'
+    l_bb_gi_39: 'FFFFFF'
+    l_bb_gi_40: 'FFFFFF'
+    l_bb_gi_41: 'FFFFFF'
+    l_bb_gi_42: 'FFFFFF'
+    l_bb_gi_43: 'FFFFFF'
+    l_bb_gi_44: 'FFFFFF'
+    l_bb_gi_45: 'FFFFFF'
+    l_bb_gi_46: 'FFFFFF'
+    l_bb_gi_47: 'FFFFFF'
+    l_bb_gi_48: 'FFFFFF'
+    l_bb_gi_49: 'FFFFFF'
+    l_bb_gi_50: 'FFFFFF'
+    l_bb_gi_51: 'FFFFFF'
+    l_bb_gi_52: 'FFFFFF'
+    l_bb_gi_53: 'FFFFFF'
+    l_bb_gi_54: 'FFFFFF'
+    l_bb_gi_55: 'FFFFFF'
+    l_bb_gi_56: 'FFFFFF'
+    l_bb_gi_57: 'FFFFFF'
+    l_bb_gi_58: 'FFFFFF'
+    l_bb_gi_59: 'FFFFFF'
+    l_bb_gi_60: 'FFFFFF'
+    l_bb_gi_61: 'FFFFFF'
+    l_bb_gi_62: 'FFFFFF'
+    l_bb_gi_63: 'FFFFFF'
+    l_bb_gi_64: 'FFFFFF'
+    l_bb_gi_65: 'FFFFFF'
+    l_bb_gi_66: 'FFFFFF'
+    l_bb_gi_67: 'FFFFFF'
+    l_bb_gi_68: 'FFFFFF'
+    l_bb_gi_69: 'FFFFFF'
+    l_bb_gi_70: 'FFFFFF'
+    l_bb_gi_71: 'FFFFFF'
+    l_bb_gi_72: 'FFFFFF'
+    l_gi_1: 'FFFFFF'
+    l_gi_10: 'FFFFFF'
+    l_gi_11: 'FFFFFF'
+    l_gi_12: 'FFFFFF'
+    l_gi_13: 'FFFFFF'
+    l_gi_14: 'FFFFFF'
+    l_gi_15: 'FFFFFF'
+    l_gi_16: 'FFFFFF'
+    l_gi_17: 'FFFFFF'
+    l_gi_18: 'FFFFFF'
+    l_gi_19: 'FFFFFF'
+    l_gi_2: 'FFFFFF'
+    l_gi_20: 'FFFFFF'
+    l_gi_21: 'FFFFFF'
+    l_gi_22: 'FFFFFF'
+    l_gi_23: 'FFFFFF'
+    l_gi_24: 'FFFFFF'
+    l_gi_25: 'FFFFFF'
+    l_gi_26: 'FFFFFF'
+    l_gi_27: 'FFFFFF'
+    l_gi_28: 'FFFFFF'
+    l_gi_29: 'FFFFFF'
+    l_gi_3: 'FFFFFF'
+    l_gi_30: 'FFFFFF'
+    l_gi_31: 'FFFFFF'
+    l_gi_32: 'FFFFFF'
+    l_gi_4: 'FFFFFF'
+    l_gi_5: 'FFFFFF'
+    l_gi_6: 'FFFFFF'
+    l_gi_7: 'FFFFFF'
+    l_gi_8: 'FFFFFF'
+    l_gi_9: 'FFFFFF'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+    

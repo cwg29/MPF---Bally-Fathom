@@ -1,0 +1,17 @@
+#show_version=5
+##! show: color_cycle_pop_show
+- time: 0
+  lights:
+    (led1): (color1)-f1000ms
+    (led2): (color2)-f1000ms
+    (led3): (color3)-f1000ms
+- time: 1
+  lights:
+    (led2): (color1)-f1000ms
+    (led3): (color2)-f1000ms
+    (led1): (color3)-f1000ms
+- time: 3
+  lights:
+    (led3): (color1)-f1000ms
+    (led1): (color2)-f1000ms
+    (led2): (color3)-f1000ms

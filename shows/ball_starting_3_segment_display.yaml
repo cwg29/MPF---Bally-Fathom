@@ -1,0 +1,21 @@
+#show_version=5
+- duration: 5s
+  segment_displays:
+    neoSegTop:
+      text: "  DEEP    DIVE  "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+    neoSegBot:
+      text: "  BALL    No 3  "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+
+
+
+
+
+

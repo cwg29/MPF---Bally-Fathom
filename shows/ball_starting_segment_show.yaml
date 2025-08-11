@@ -1,0 +1,21 @@
+#show_version=5
+- duration: 5s
+  segment_displays:
+    neoSegTop:
+      text: "  AHH     YES   "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+    neoSegBot:
+      text: " READY   PLAYER "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+
+
+
+
+
+
