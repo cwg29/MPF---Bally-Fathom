@@ -1,0 +1,253 @@
+#config_version=5
+##! mode: awards
+# in modes/awards
+
+mode:
+  start_events: start_mode_awards
+  stop_events: stop_mode_awards
+  priority: 175
+
+# Fathom Achievement 
+achievements:
+  cave_trap_stage_1:  # lock the ball
+    show_tokens:
+      led: led_rt_grn_arrow
+      color1: green
+      color2: off
+    show_when_started: color_cave_cycle_show
+      #loops: -1
+      #speed: 10
+      #priority: 3
+    #show_when_selected: flash_green_light_show
+    #show_when_completed: stage_light_show #name of the show
+    events_when_started: shoot_cave_trap_stage_1    # starts arzach_multiball mode. Posts an event called award_arzach_multiball when this achievement is started. We’ll use this as the start event for the Arzach Multiball mode.
+    start_events: initialize_cavetrap, ball_starting
+    enable_events: initialize_cavetrap, reset_cave_trap
+    complete_events: cave_trap_stage_1_complete
+    start_enabled: true
+    reset_events: reset_cave_trap
+    restart_on_next_ball_when_started: true
+    #stop_events: reset_cave_trap
+    show_when_stopped: stage_off_light_show
+    events_when_completed: cave_trap_stage_1_achieved
+            
+  cave_trap_stage_2:  # first drop target (3X) down
+    show_tokens:
+      led: led_grn_3X
+    show_when_selected: flash_green_light_show
+    show_when_completed: green_stage_light_show
+    events_when_started: shoot_cave_trap_stage_2
+    start_events: cave_trap_stage_1_achieved, logicblock_cave_drop_seq_complete
+    enable_events: cave_trap_stage_1_achieved, reset_cave_trap
+    complete_events: cave_trap_stage_2_complete
+    start_enabled: true
+    reset_events: reset_cave_trap
+    restart_on_next_ball_when_started: true
+    events_when_completed: cave_trap_stage_2_achieved
+    
+  cave_trap_stage_3: # second drop target (plus1X) down - first shot
+    show_tokens:
+      led: led_grn_4X
+    show_when_selected: flash_orange_light_show
+    show_when_completed: orange_stage_light_show
+    events_when_started: shoot_cave_trap_stage_3
+    start_events: cave_trap_stage_2_achieved, logicblock_cave_drop_seq_2_complete
+    enable_events: cave_trap_stage_2_achieved, reset_cave_trap
+    complete_events: cave_trap_stage_3_complete
+    start_enabled: true
+    reset_events: reset_cave_trap
+    restart_on_next_ball_when_started: true
+    events_when_completed: cave_trap_stage_3_achieved
+  
+  cave_trap_level_1:  # second drop target (plus1X) down - 2nd shot - starts cave trap multiball
+    show_tokens:
+      led: led_grn_5X
+    show_when_selected: flash_white_light_show
+    show_when_completed: stage_light_show
+    events_when_started: shoot_cave_trap_level_1
+    start_events: cave_trap_stage_3_achieved, logicblock_cave_drop_seq_3_complete
+    enable_events: cave_trap_stage_3_achieved, reset_cave_trap
+    complete_events: cave_trap_level_1_complete
+    start_enabled: true
+    reset_events: reset_cave_trap
+    restart_on_next_ball_when_started: true
+    #reset_events: reset_cave_trap
+    
+  cave_trap_multiball: #cave trap multiball achieved
+    events_when_started: shoot_cave_trap_level_done
+    start_events: cave_trap_level_1_complete
+    enable_events: cave_trap_level_1_complete, reset_cave_trap
+    complete_events: cave_trap_level_1_complete
+    start_enabled: true
+    reset_events: reset_cave_trap
+    restart_on_next_ball_when_started: true
+    
+
+  lagoon_trap_stage_1:  # lock the ball
+    show_tokens:
+      led: led_lf_blu_arrow
+      color1: blue
+      color2: off
+    show_when_started: color_lagoon_cycle_show
+    #show_when_selected: flash_green_light_show
+    #show_when_completed: stage_light_show #name of the show
+    events_when_started: shoot_lagoon_trap_stage_1
+    start_events: initialize_lagoontrap, ball_starting
+    enable_events: initialize_lagoontrap
+    complete_events: lagoon_trap_stage_1_complete
+    start_enabled: true
+    reset_events: reset_lagoon_trap
+    restart_on_next_ball_when_started: true
+    #stop_events: reset_lagoon_trap
+    show_when_stopped: stage_off_light_show
+    events_when_completed: lagoon_trap_stage_1_achieved
+            
+  lagoon_trap_stage_2:  # first drop target (3X) down
+    show_tokens:
+      led: led_blu_3X
+    show_when_selected: flash_green_light_show
+    show_when_completed: green_stage_light_show
+    events_when_started: shoot_lagoon_trap_stage_2
+    start_events: lagoon_trap_stage_1_achieved, logicblock_lagoon_drop_seq_complete
+    enable_events: lagoon_trap_stage_1_achieved, reset_lagoon_trap
+    complete_events: lagoon_trap_stage_2_complete
+    start_enabled: true
+    reset_events: reset_lagoon_trap
+    restart_on_next_ball_when_started: true
+    events_when_completed: lagoon_trap_stage_2_achieved
+    
+  lagoon_trap_stage_3: # second drop target (plus1X) down - first shot
+    show_tokens:
+      led: led_blu_4X
+    show_when_selected: flash_orange_light_show
+    show_when_completed: orange_stage_light_show
+    events_when_started: shoot_lagoon_trap_stage_3
+    start_events: lagoon_trap_stage_2_achieved, logicblock_lagoon_drop_seq_2_complete
+    enable_events: lagoon_trap_stage_2_achieved, reset_lagoon_trap
+    complete_events: lagoon_trap_stage_3_complete
+    start_enabled: true
+    reset_events: reset_lagoon_trap
+    restart_on_next_ball_when_started: true
+    events_when_completed: lagoon_trap_stage_3_achieved
+  
+  lagoon_trap_level_1:  # second drop target (plus1X) down - 2nd shot - starts lagoon trap multiball
+    show_tokens:
+      led: led_blu_5X
+    show_when_selected: flash_white_light_show
+    show_when_completed: stage_light_show
+    events_when_started: shoot_lagoon_trap_level_1
+    start_events: lagoon_trap_stage_3_achieved, logicblock_lagoon_drop_seq_3_complete
+    enable_events: lagoon_trap_stage_3_achieved, reset_lagoon_trap
+    complete_events: lagoon_trap_level_1_complete
+    start_enabled: true
+    reset_events: reset_lagoon_trap
+    restart_on_next_ball_when_started: true
+    #reset_events: reset_lagoon_trap
+    
+  lagoon_trap_multiball: #lagoon trap multiball achieved
+    events_when_started: shoot_lagoon_trap_level_done
+    start_events: lagoon_trap_level_1_complete
+    enable_events: lagoon_trap_level_1_complete, reset_lagoon_trap
+    complete_events: lagoon_trap_level_1_complete
+    start_enabled: true
+    reset_events: reset_lagoon_trap
+    restart_on_next_ball_when_started: true
+    
+# Extra Ball Achievement    
+  fathom_eb_lvl_1:
+    #show_tokens:
+      #led: led_energy_lvl_1
+    #show_when_selected: flash_green_light_show
+    #show_when_completed: blue_light_show
+    events_when_started: eb_lvl_l_started
+    start_events: initialize_extra_ball
+    enable_events: initialize_extra_ball, reset_extra_ball
+    complete_events: extra_ball_award_achieved
+    reset_events: reset_eb_lvl_1
+    events_when_completed: eb_lvl_1_achieved
+  
+
+
+    
+achievement_groups:
+  cave_trap_awards:
+    achievements:
+      - cave_trap_stage_1
+      - cave_trap_stage_2
+      - cave_trap_stage_3
+      - cave_trap_level_1
+      
+    #show_tokens:
+      #led: led_the_keep #These are the show tokens for the group itself. In this case they’re the two lights on the electric chair, since those lights turn on and off to indicate whether the chair or swamp can be shot to award the currently selected item.
+    auto_select: false
+    events_when_all_completed: cave_trap_multiball_complete
+    enable_while_no_achievement_started: true
+    disable_while_achievement_started: false
+    start_selected_events: left_saucer
+    enable_events: cave_trap_initialize
+    disable_events: unlight_cave_trap
+        
+  lagoon_trap_awards:
+    achievements:
+      - lagoon_trap_stage_1
+      - lagoon_trap_stage_2
+      - lagoon_trap_stage_3
+      - lagoon_trap_level_1
+      
+    #show_tokens:
+      #led: led_the_keep #These are the show tokens for the group itself. In this case they’re the two lights on the electric chair, since those lights turn on and off to indicate whether the chair or swamp can be shot to award the currently selected item.
+    auto_select: false
+    events_when_all_completed: lagoon_trap_multiball_complete
+    enable_while_no_achievement_started: true
+    disable_while_achievement_started: false
+    start_selected_events: left_saucer
+    enable_events: lagoon_trap_initialize
+    disable_events: unlight_lagoon_trap
+    
+  multiball_awards:
+    achievements:
+      - lagoon_trap_multiball
+      - cave_trap_multiball
+      
+    #show_tokens:
+      #led: led_the_keep #These are the show tokens for the group itself. In this case they’re the two lights on the electric chair, since those lights turn on and off to indicate whether the chair or swamp can be shot to award the currently selected item.
+    auto_select: false
+    events_when_all_completed: all_trap_multiball_complete
+    enable_while_no_achievement_started: true
+    disable_while_achievement_started: false
+    start_selected_events: left_saucer
+    enable_events: initialize_base
+    disable_events: unlight_traps
+    
+  fathom_eb_awards:
+    achievements:
+      - fathom_eb_lvl_1
+      
+    #show_tokens:
+      #led: extra_ball_lane
+    auto_select: false
+    events_when_all_completed: award_extra_ball_given
+    enable_while_no_achievement_started: true #In our case, we do not want to automatically enable the achievement group when no achievement is started, because the rules for Addams Family say that the player has to shoot the center ramp or right inlane to light the chair (which is enabling this achievement group).
+    #show_when_enabled: flash_green_light_show
+    disable_while_achievement_started: false
+    start_selected_events: left_saucer
+    enable_events: base
+    disable_events: unlight_extra_ball
+    
+ 
+    
+  #fathom_drop_bank_awards:
+  #  achievements:
+  #    - fathom_left_drop_bank
+   #   - fathom_center_drop_bank
+    ##show_tokens:
+      #led: led_orbit
+  #  auto_select: false
+  #  events_when_all_completed: all_drop_banks_complete #Posts an event called select_tour_mansion once all 12 achievements in this group in complete. We’ll use this later to light the “tour mansion” award.
+  #  enable_while_no_achievement_started: true #In our case, we do not want to automatically enable the achievement group when no achievement is started, because the rules for Addams Family say that the player has to shoot the center ramp or right inlane to light the chair (which is enabling this achievement group).
+    ##show_when_enabled: drop_bank_light_show
+ #   disable_while_achievement_started: false
+  #  start_selected_events: left_saucer
+  #  enable_events: base
+  #  disable_events: unlight_drop_banks
+    

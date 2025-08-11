@@ -1,0 +1,487 @@
+#show_version=5
+##! show: attract_light_show
+#- duration: 1
+  #lights:
+    #led_game_over: white
+
+# Step 1    
+- duration: 1
+  lights:
+    led_apron_1: blue-f400ms
+    gi: white-f2000ms
+    bb_gi: white-f2000ms
+    led_ctr_bnk_yel: yellow-f400ms
+    led_rt_bnk_grn: green-f400ms
+    led_top_bnk_blue: blue-f400ms
+    led_lf_bnk_blue: blue-f400ms
+    led_lf_bnk_grn: green-f400ms
+    led_lf_pop: blue-f500ms
+    led_ctr_pop: red-f500ms
+    led_rt_pop: red-f500ms
+    led_blu_10: off
+    led_grn_8: off
+    led_grn_9: green-f400ms
+    led_blu_1: blue-f400ms
+    led_blu_50: blue-f400ms
+    led_left_org_arrow: yellow-f500ms
+    led_blu_3X: blue-f400ms
+    led_grn_3X: green-f400ms
+    led_blu_5X: off
+    led_grn_5X: off
+    led_ctr_spec_wlit: red-f500ms
+    led_ctr_adv_bns_rt: green-f500ms
+    led_ctr_in_seq: white-f500ms
+    led_rt_star_1: off
+    led_top_a: orange-f400ms
+    led_spinner: red-f500ms
+    bb_fathom: green-f800ms
+    bb_fish: red-f400ms
+    bb_starfish: blue-f400ms
+    bb_sun_ray: white-f400ms
+    bb_ball_in_play: white-f800ms
+    bb_match: blue-f800ms
+    bb_shoot_again: green-f800ms
+    led_tilt: green-f800ms
+    
+# Step 2
+- duration: 1
+  lights:
+    led_apron_2: blue-f400ms
+    led_blu_1: off
+    led_blu_2: blue-f400ms
+    led_grn_9: off
+    led_grn_10: green-f400ms
+    led_shoot_again: blue-f400ms
+    led_right_org_arrow: yellow-f500ms
+    led_ctr_adv_bns_lf: blue-f500ms
+    led_lf_blu_arrow: blue-f500ms
+    led_lf_star_2: off
+    led_top_a: off
+    led_adv_bns_1: blue-f400ms
+    led_rt_bnk_grn: blue-f400ms
+    led_top_bnk_blue: green-f400ms
+    led_lf_bnk_blue: green-f400ms
+    led_lf_bnk_grn: blue-f400ms
+    led_ctr_bnk_yel: 7DF6FA-f400ms   # color code from photoshop color wheel
+    
+# Step 3
+- duration: 1
+  lights:
+    led_apron_3: blue-f400ms
+    led_blu_2: off
+    led_blu_3: blue-f400ms
+    led_grn_10: off
+    led_grn_1: green-f400ms
+    led_grn_50: green-f400ms
+    led_left_special: yellow-f500ms
+    led_blu_3X: off
+    led_grn_3X: off
+    led_ctr_dbl_wlit: yellow-f500ms
+    led_ctr_spec_wlit: off
+    led_ctr_in_seq: off
+    led_grn_trg_dwn: green-f500ms
+    led_lf_star_3: green-f400ms
+    led_top_b: orange-f400ms
+    led_lf_pop: red-f500ms
+    led_ctr_pop: blue-f500ms
+    led_rt_pop: red-f500ms
+    led_rt_bnk_grn: green-f400ms
+    led_top_bnk_blue: blue-f400ms
+    led_lf_bnk_blue: blue-f400ms
+    led_lf_bnk_grn: green-f400ms
+    led_ctr_bnk_yel: yellow-f400ms
+    bb_sun_ray: blue-f400ms
+    
+# Step 4
+- duration: 1
+  lights:
+    led_apron_shooter_lane: blue-f400ms
+    led_blu_3: off
+    led_blu_4: blue-f400ms
+    led_grn_1: off
+    led_grn_2: green-f400ms
+    led_shoot_again: off
+    led_left_org_arrow: off
+    led_right_special: yellow-f500ms
+    led_ctr_adv_bns_rt: off
+    led_ctr_adv_bns_lf: off
+    led_top_b: off
+    led_adv_bns_1: off
+    led_rt_bnk_grn: blue-f400ms
+    led_top_bnk_blue: green-f400ms
+    led_lf_bnk_blue: green-f400ms
+    led_lf_bnk_grn: blue-f400ms
+    led_ctr_bnk_yel: 7DF6FA-f400ms   # color code from photoshop color wheel
+    bb_fish: white-f400ms
+    bb_starfish: red-f400ms
+    
+# Step 5
+- duration: 1
+  lights:
+    led_blu_4: off
+    led_blu_5: blue-f400ms
+    led_grn_2: off
+    led_grn_3: green-f400ms
+    led_right_org_arrow: off
+    led_blu_4X: yellow-f400ms
+    led_grn_4X: yellow-f400ms
+    led_grn_trg_dwn: off
+    led_lf_blu_arrow: off
+    led_lf_star_3: off
+    led_top_c: orange-f400ms
+    led_extra_ball: orange-f400ms
+    led_rt_bnk_grn: green-f400ms
+    led_top_bnk_blue: blue-f400ms
+    led_lf_bnk_blue: blue-f400ms
+    led_lf_bnk_grn: green-f400ms
+    led_ctr_bnk_yel: yellow-f400ms
+    
+# Step 6
+- duration: 1
+  lights:
+    led_blu_5: off
+    led_blu_6: blue-f400ms
+    led_grn_3: off
+    led_grn_4: green-f400ms
+    led_blu_50: off
+    led_left_special: off
+    led_shoot_again: red-f400ms
+    led_ctr_dbl_wlit: off
+    led_ctr_trip_wlit: yellow-f500ms
+    led_blu_trg_dwn: blue-f500ms
+    led_rt_grn_arrow: green-f500ms
+    led_rt_star_2: green-f400ms
+    led_top_c: off
+    led_adv_bns_2: green-f400ms
+    led_lf_pop: red-f500ms
+    led_ctr_pop: red-f500ms
+    led_rt_pop: blue-f500ms
+    led_spinner: off
+    led_rt_bnk_grn: blue-f400ms
+    led_top_bnk_blue: green-f400ms
+    led_lf_bnk_blue: green-f400ms
+    led_lf_bnk_grn: blue-f400ms
+    led_ctr_bnk_yel: 7DF6FA-f400ms   # color code from photoshop color wheel
+    bb_sun_ray: blue-f400ms
+    
+    
+# Step 7
+- duration: 1
+  lights:
+    gi: green-f1500ms
+    led_blu_6: off
+    led_blu_7: blue-f400ms
+    led_grn_4: off
+    led_grn_5: green-f400ms
+    led_right_special: off
+    led_blu_4X: off
+    led_grn_4X: off
+    led_lf_star_1: green-f400ms
+    led_abc_special: red-f400ms
+    led_extra_ball: off
+    led_rt_bnk_grn: green-f400ms
+    led_top_bnk_blue: blue-f400ms
+    led_lf_bnk_blue: blue-f400ms
+    led_lf_bnk_grn: green-f400ms
+    led_ctr_bnk_yel: yellow-f400ms
+    bb_fathom: white-f800ms
+    bb_bally: red-f800ms
+    bb_shoot_again: red-f800ms
+    led_tilt: red-f800ms
+    
+# Step 8
+- duration: 1
+  lights:
+    led_blu_7: off
+    led_blu_8: blue-f400ms
+    led_grn_5: off
+    led_grn_6: green-f400ms
+    led_grn_50: off
+    led_shoot_again: off
+    led_blu_trg_dwn: off
+    led_rt_star_2: off
+    led_abc_special: off
+    led_adv_bns_2: off
+    led_rt_bnk_grn: blue-f400ms
+    led_top_bnk_blue: green-f400ms
+    led_lf_bnk_blue: green-f400ms
+    led_lf_bnk_grn: blue-f400ms
+    led_ctr_bnk_yel: 7DF6FA-f400ms   # color code from photoshop color wheel
+    bb_fish: red-f400ms
+    bb_starfish: white-f400ms
+    
+# Step 9
+- duration: 1
+  lights:
+    led_blu_8: off
+    led_blu_9: blue-f400ms
+    led_grn_6: off
+    led_grn_7: green-f400ms
+    led_blu_5X: white-f400ms
+    led_grn_5X: white-f400ms
+    led_ctr_trip_wlit: off
+    led_lf_star_1: off
+    led_rt_star_1: green-f400ms
+    led_lf_pop: green-f500ms
+    led_ctr_pop: green-f500ms
+    led_rt_pop: green-f500ms
+    led_rt_bnk_grn: green-f400ms
+    led_top_bnk_blue: blue-f400ms
+    led_lf_bnk_blue: blue-f400ms
+    led_lf_bnk_grn: green-f400ms
+    led_ctr_bnk_yel: yellow-f400ms
+    bb_sun_ray: white-f400ms
+    
+# Step 10
+- duration: 1
+  lights:
+    led_blu_9: off
+    led_blu_10: blue-f400ms
+    led_grn_7: off
+    led_grn_8: green-f400ms
+    led_rt_grn_arrow: off
+    led_lf_star_2: green-f400ms
+    led_rt_bnk_grn: blue-f400ms
+    led_top_bnk_blue: green-f400ms
+    led_lf_bnk_blue: green-f400ms
+    led_lf_bnk_grn: blue-f400ms
+    led_ctr_bnk_yel: 7DF6FA-f400ms   # color code from photoshop color wheel
+    bb_ball_in_play: red-f800ms
+    bb_match: green-f800ms
+
+### 2nd Loop
+
+# Step 11    
+- duration: 1
+  lights:
+    led_apron_1: green-f1000ms
+    led_lf_pop: blue-f500ms
+    led_ctr_pop: red-f500ms
+    led_rt_pop: red-f500ms
+    led_blu_10: off
+    led_grn_8: off
+    led_grn_9: green-f400ms
+    led_blu_1: blue-f400ms
+    led_blu_50: blue-f400ms
+    led_left_org_arrow: yellow-f500ms
+    led_blu_3X: blue-f400ms
+    led_grn_3X: green-f400ms
+    led_blu_5X: off
+    led_grn_5X: off
+    led_ctr_spec_wlit: red-f500ms
+    led_ctr_adv_bns_rt: green-f500ms
+    led_ctr_in_seq: white-f500ms
+    led_rt_star_1: off
+    led_top_a: orange-f400ms
+    led_spinner: red-f500ms
+    led_rt_bnk_grn: green-f400ms
+    led_top_bnk_blue: blue-f400ms
+    led_lf_bnk_blue: blue-f400ms
+    led_lf_bnk_grn: green-f400ms
+    led_ctr_bnk_yel: yellow-f400ms
+    
+# Step 12
+- duration: 1
+  lights:
+    led_apron_2: green-f1000ms
+    led_blu_1: off
+    led_blu_2: blue-f400ms
+    led_grn_9: off
+    led_grn_10: green-f400ms
+    led_shoot_again: blue-f400ms
+    led_right_org_arrow: yellow-f500ms
+    led_ctr_adv_bns_lf: blue-f500ms
+    led_lf_blu_arrow: blue-f500ms
+    led_lf_star_2: off
+    led_top_a: off
+    led_adv_bns_1: blue-f400ms
+    led_rt_bnk_grn: blue-f400ms
+    led_top_bnk_blue: green-f400ms
+    led_lf_bnk_blue: green-f400ms
+    led_lf_bnk_grn: blue-f400ms
+    led_ctr_bnk_yel: 7DF6FA-f400ms   # color code from photoshop color wheel
+    bb_fish: blue-f400ms
+    bb_starfish: red-f400ms
+    bb_sun_ray: blue-f400ms
+    
+# Step 13
+- duration: 1
+  lights:
+    led_apron_3: green-f1000ms
+    led_blu_2: off
+    led_blu_3: blue-f400ms
+    led_grn_10: off
+    led_grn_1: green-f400ms
+    led_grn_50: green-f400ms
+    led_left_special: yellow-f500ms
+    led_blu_3X: off
+    led_grn_3X: off
+    led_ctr_dbl_wlit: yellow-f500ms
+    led_ctr_spec_wlit: off
+    led_ctr_in_seq: off
+    led_grn_trg_dwn: green-f500ms
+    led_lf_star_3: green-f400ms
+    led_top_b: orange-f400ms
+    led_lf_pop: red-f500ms
+    led_ctr_pop: blue-f500ms
+    led_rt_pop: red-f500ms
+    led_rt_bnk_grn: green-f400ms
+    led_top_bnk_blue: blue-f400ms
+    led_lf_bnk_blue: blue-f400ms
+    led_lf_bnk_grn: green-f400ms
+    led_ctr_bnk_yel: yellow-f400ms
+    
+# Step 14
+- duration: 1
+  lights:
+    gi: red-f1500ms
+    led_apron_shooter_lane: green-f400ms
+    led_blu_3: off
+    led_blu_4: blue-f400ms
+    led_grn_1: off
+    led_grn_2: green-f400ms
+    led_shoot_again: off
+    led_left_org_arrow: off
+    led_right_special: yellow-f500ms
+    led_ctr_adv_bns_rt: off
+    led_ctr_adv_bns_lf: off
+    led_top_b: off
+    led_adv_bns_1: off
+    led_rt_bnk_grn: blue-f400ms
+    led_top_bnk_blue: green-f400ms
+    led_lf_bnk_blue: green-f400ms
+    led_lf_bnk_grn: blue-f400ms
+    led_ctr_bnk_yel: 7DF6FA-f400ms   # color code from photoshop color wheel
+    bb_fathom: green-f800ms
+    bb_bally: white-f800ms
+    bb_shoot_again: blue-f800ms
+    led_tilt: blue-f800ms
+    
+# Step 15
+- duration: 1
+  lights:
+    led_blu_4: off
+    led_blu_5: blue-f400ms
+    led_grn_2: off
+    led_grn_3: green-f400ms
+    led_right_org_arrow: off
+    led_blu_4X: yellow-f400ms
+    led_grn_4X: yellow-f400ms
+    led_grn_trg_dwn: off
+    led_lf_blu_arrow: off
+    led_lf_star_3: off
+    led_top_c: orange-f400ms
+    led_extra_ball: orange-f400ms
+    led_rt_bnk_grn: green-f400ms
+    led_top_bnk_blue: blue-f400ms
+    led_lf_bnk_blue: blue-f400ms
+    led_lf_bnk_grn: green-f400ms
+    led_ctr_bnk_yel: yellow-f400ms
+    bb_sun_ray: white-f400ms
+    
+# Step 16
+- duration: 1
+  lights:
+    led_blu_5: off
+    led_blu_6: blue-f400ms
+    led_grn_3: off
+    led_grn_4: green-f400ms
+    led_blu_50: off
+    led_left_special: off
+    led_shoot_again: red-f400ms
+    led_ctr_dbl_wlit: off
+    led_ctr_trip_wlit: yellow-f500ms
+    led_blu_trg_dwn: blue-f500ms
+    led_rt_grn_arrow: green-f500ms
+    led_rt_star_2: green-f400ms
+    led_top_c: off
+    led_adv_bns_2: green-f400ms
+    led_lf_pop: red-f500ms
+    led_ctr_pop: red-f500ms
+    led_rt_pop: blue-f500ms
+    led_spinner: off
+    led_rt_bnk_grn: blue-f400ms
+    led_top_bnk_blue: green-f400ms
+    led_lf_bnk_blue: green-f400ms
+    led_lf_bnk_grn: blue-f400ms
+    led_ctr_bnk_yel: 7DF6FA-f400ms   # color code from photoshop color wheel
+    bb_fish: white-f400ms
+    bb_starfish: blue-f400ms
+    
+# Step 17
+- duration: 1
+  lights:
+    led_blu_6: off
+    led_blu_7: blue-f400ms
+    led_grn_4: off
+    led_grn_5: green-f400ms
+    led_right_special: off
+    led_blu_4X: off
+    led_grn_4X: off
+    led_lf_star_1: green-f400ms
+    led_abc_special: red-f400ms
+    led_extra_ball: off
+    led_rt_bnk_grn: green-f400ms
+    led_top_bnk_blue: blue-f400ms
+    led_lf_bnk_blue: blue-f400ms
+    led_lf_bnk_grn: green-f400ms
+    led_ctr_bnk_yel: yellow-f400ms
+    
+# Step 18
+- duration: 1
+  lights:
+    led_blu_7: off
+    led_blu_8: blue-f400ms
+    led_grn_5: off
+    led_grn_6: green-f400ms
+    led_grn_50: off
+    led_shoot_again: off
+    led_blu_trg_dwn: off
+    led_rt_star_2: off
+    led_abc_special: off
+    led_adv_bns_2: off
+    led_rt_bnk_grn: blue-f400ms
+    led_top_bnk_blue: green-f400ms
+    led_lf_bnk_blue: green-f400ms
+    led_lf_bnk_grn: blue-f400ms
+    led_ctr_bnk_yel: 7DF6FA-f400ms   # color code from photoshop color wheel
+    bb_sun_ray: blue-f400ms
+    
+# Step 19
+- duration: 1
+  lights:
+    led_blu_8: off
+    led_blu_9: blue-f400ms
+    led_grn_6: off
+    led_grn_7: green-f400ms
+    led_blu_5X: white-f400ms
+    led_grn_5X: white-f400ms
+    led_ctr_trip_wlit: off
+    led_lf_star_1: off
+    led_rt_star_1: green-f400ms
+    led_lf_pop: green-f500ms
+    led_ctr_pop: green-f500ms
+    led_rt_pop: green-f500ms
+    led_rt_bnk_grn: green-f400ms
+    led_top_bnk_blue: blue-f400ms
+    led_lf_bnk_blue: blue-f400ms
+    led_lf_bnk_grn: green-f400ms
+    led_ctr_bnk_yel: yellow-f400ms
+    
+# Step 20
+- duration: 1
+  lights:
+    led_blu_9: off
+    led_blu_10: blue-f400ms
+    led_grn_7: off
+    led_grn_8: green-f400ms
+    led_rt_grn_arrow: off
+    led_lf_star_2: green-f400ms
+    led_rt_bnk_grn: blue-f400ms
+    led_top_bnk_blue: green-f400ms
+    led_lf_bnk_blue: green-f400ms
+    led_lf_bnk_grn: blue-f400ms
+    led_ctr_bnk_yel: 7DF6FA-f400ms   # color code from photoshop color wheel
+
+
+

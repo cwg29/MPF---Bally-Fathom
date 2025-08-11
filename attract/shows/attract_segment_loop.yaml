@@ -1,0 +1,101 @@
+#show_version=5
+- duration: 4s
+  segment_displays:
+    neoSegTop:
+      text: "FATHOM    3.0   "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+        # text: "***"
+    neoSegBot:
+      text: " READY   START  "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+  lights:
+    bb_high_score: off
+
+- duration: 4s
+  segment_displays:
+    neoSegTop:
+      text: " BUILD     BY   "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+    neoSegBot:
+      text: " C-DUB   the NUC"
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+
+- duration: 4s
+  segment_displays:
+    neoSegTop:
+      text: "POWERED    BY   "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+    neoSegBot:
+      text: " COBRA   -PIN   "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+
+- duration: 4s
+  segment_displays:
+    neoSegTop:
+      text: "  AHH     YES   "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+    neoSegBot:
+      text: "  DIVE   AGAIN  "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+
+- duration: 4s
+  segment_displays:
+    neoSegTop:
+      text: "{(machine.score1_value)}     {(machine.score1_name)}"
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+    
+    neoSegBot:
+      text: " DIVER  CAPTAIN "
+      transition:
+        type: split
+        mode: wipe
+        direction: out
+  lights:
+    bb_high_score: white-f1000ms
+
+#- duration: 4s
+#  segment_displays:
+#    neoSegTop:
+ #     text: "LAST    GAME "
+ #     transition:
+#        type: push
+#        direction: left
+#        text: " <<< "
+ #   neoSegBot:    
+#      text: "{(machine|high_score):>8,d}"
+#      transition:
+#        type: push
+#        direction: right
+#        text: " >>> "
+
+
+
+
+

@@ -1,0 +1,184 @@
+#show_version=5
+##! show: attract_display_loop
+##! mode: attract
+
+
+    
+- duration: 4s    
+  slides:
+    ball_end_slide:  
+      widgets:
+      - type: video
+        video: ball_end_video
+        height: 720
+        width: 1280
+        z: 5
+        expire: 5s
+      transition:
+        type: fade
+        duration: 1s        
+
+
+- duration: 15s
+  slides:
+    mermaid_slide:
+      widgets:
+      - type: video
+        video: attract_loop_video
+        height: 720
+        width: 1280
+      #widgets:
+      #- type: text
+      #  text: ARZACH!
+      #  color: red
+      #  font_size: 120
+      #  z: 10
+       # y: 40
+      #  anchor_y: bottom
+      transition:
+        type: fade
+        duration: 2s
+        #direction: left
+      #auto_play: yes
+      #control_events:
+        #- event: mode_attract_started
+          #action: play
+
+- duration: 10s
+  slides:
+    show_high_scores:
+      widgets:
+      - type: Text
+        text: HIGH SCORE
+        font_size: 60
+        bold: true
+        color: red
+        anchor_x: center
+        anchor_y: center
+        x: center
+        y: top-80
+      - type: Text
+        text: DIVER CAPTAIN
+        style: attract_mode_high_score_display_label
+        y: top-150
+        color: red
+      - type: Text
+        text: (machine|score1_name)
+        style: attract_mode_high_score_display_name
+        y: top-142
+        color: red
+      - type: Text
+        text: (machine|score1_value)
+        style: attract_mode_high_score_display_score
+        y: top-135
+        color: red
+      - type: video
+        video: lane_change_4_video
+        height: 720
+        width: 1280
+      transition:
+        type: fade
+        duration: 1s
+
+- duration: 4s    
+  slides:
+    rules_1_slide:  
+      widgets:
+      - type: Text
+        font_name: bobbithehippie  #ancienttext
+        text: Lock Divers in Traps!
+        font_size: 70
+        bold: true
+        color: red
+        anchor_x: center
+        anchor_y: center
+        x: center
+        y: top-80
+        z: 6
+      - type: video
+        video: cave_trap_video
+        height: 720
+        width: 1280
+        z: 5
+        expire: 5s      
+      transition:
+        type: fade
+        duration: 500ms
+
+- duration: 4s    
+  slides:
+    rules_2_slide:  
+      widgets:
+      - type: Text
+        font_name: bobbithehippie  #ancienttext
+        text: Hit Drop Targets to Release!
+        font_size: 70
+        bold: true
+        color: red
+        anchor_x: center
+        anchor_y: center
+        x: center
+        y: top-80
+        z: 7
+      - type: video
+        video: 5X_mltplr_video
+        height: 720
+        width: 1280
+        z: 6
+        expire: 5s      
+      transition:
+        type: fade
+        duration: 500ms   
+        
+- duration: 4s    
+  slides:
+    rules_2_slide:  
+      widgets:
+      - type: Text
+        font_name: bobbithehippie  #ancienttext
+        text: Hit 1-2-3 Target Sequence for Special!
+        font_size: 70
+        bold: true
+        color: red
+        anchor_x: center
+        anchor_y: center
+        x: center
+        y: top-80
+        z: 9
+      - type: video
+        video: extra_ball_video
+        height: 720
+        width: 1280
+        z: 8
+        expire: 5s      
+      transition:
+        type: fade
+        duration: 500ms                   
+
+- duration: 4s    
+  slides:
+    rules_2_slide:  
+      widgets:
+      - type: Text
+        font_name: bobbithehippie  #ancienttext
+        text: Hit Lane Change for Specials!
+        font_size: 70
+        bold: true
+        color: red
+        anchor_x: center
+        anchor_y: center
+        x: center
+        y: top-80
+        z: 11
+      - type: video
+        video: lane_change_1_video
+        height: 720
+        width: 1280
+        z: 10
+        expire: 5s      
+      transition:
+        type: fade
+        duration: 500ms                   
+        
+
+
