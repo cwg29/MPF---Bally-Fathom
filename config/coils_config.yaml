@@ -1,0 +1,142 @@
+#config_version=5
+
+#coil numbers are labelled in silkscreen on the board
+
+  #There are multiple ways to configure flippers, use the one that
+  #  matches your hardware
+  
+coils:
+    c_pop_bmp_left:
+        number: 0-0-0
+        tags: pop1
+        default_pulse_ms: 15
+    c_shooter_launch:
+        number: 0-0-1
+        tags: launch_kicker
+        default_pulse_ms: 40
+            
+    c_slingshot_right:
+        number: 0-0-3
+        tags: slingshot
+        default_pulse_ms: 10
+        default_recycle: true
+        platform_settings:
+            recycle_factor: 3
+    c_slingshot_left:
+        number: 0-0-4
+        tags: slingshot
+        default_pulse_ms: 10
+        default_recycle: true
+        platform_settings:
+            recycle_factor: 3
+    c_saucer_right:
+        number: 0-0-5
+        tags: right_trap
+        default_pulse_ms: 25
+    c_drop1_target_left:
+        number: 0-0-6
+        tags: left_drop_target
+        default_pulse_ms: 30
+    c_drop2_target_left:
+        number: 0-0-7
+        tags: top_drop_target
+        default_pulse_ms: 30
+    c_drop_target_blu_1X:
+        number: 0-0-8
+        tags: blue_1x_drop_target
+        default_pulse_ms: 25
+    c_drop_target_blu_3X:
+        number: 0-0-9
+        tags: blue_3x_drop_target
+        default_pulse_ms: 25
+    c_drop_target_grn_1X:
+        number: 0-0-10
+        tags: green_1x_drop_target
+        default_pulse_ms: 25
+    c_drop_target_grn_3X:
+        number: 0-0-11
+        tags: green_3x_drop_target
+        default_pulse_ms: 25
+    c_pop_bmp_right:
+        number: 0-0-12
+        tags: pop2
+        default_pulse_ms: 15
+    c_pop_bmp_bottom:
+        number: 0-0-13
+        tags: pop3
+        default_pulse_ms: 15
+    c_saucer_top:
+        number: 0-0-14
+        tags: top_trap
+        default_pulse_ms: 25
+    c_knocker:
+        number: 0-0-15
+        tags: bell
+        default_pulse_ms: 10
+
+    c_flipper_left_main:
+        number: 1-0-1
+        default_pulse_ms: 14
+    c_flipper_left_hold:
+        number: 1-0-2
+        allow_enable: true
+        default_hold_power: 1.0
+        default_pulse_ms: 7
+    c_flipper_right_main:
+        number: 1-0-3
+        default_pulse_ms: 17
+    c_flipper_right_hold:
+        number: 1-0-4
+        allow_enable: true
+        default_hold_power: 1.0
+        default_pulse_ms: 7
+    c_flipper_upper_right_main:
+        number: 1-0-5
+        default_pulse_ms: 11
+    c_flipper_upper_right_hold:
+        number: 1-0-6
+        allow_enable: true
+        default_hold_power: 1.0
+        default_pulse_ms: 7
+    
+    
+        
+### Satellite Board  ### Coils are 12 VDC  ###
+
+    c_drop_target_grn_3X_drop:
+        number: 3-0-1
+        tags: green_3x_drop_target_drop
+        default_pulse_ms: 25
+    c_drop_target_grn_1X_drop:
+        number: 3-0-2
+        tags: green_1x_drop_target_drop
+        default_pulse_ms: 25
+    c_drop_target_blu_3X_drop:
+        number: 3-0-3
+        tags: blue_3x_drop_target_drop
+        default_pulse_ms: 25
+    c_drop_target_blu_1X_drop:
+        number: 3-0-4
+        tags: blue_1x_drop_target_drop
+        default_pulse_ms: 25
+    c_drop_target_ctr:
+        number: 3-0-5
+        tags: center_drop_target
+        default_pulse_ms: 30
+    c_trough_eject:
+        number: 3-0-7
+        tags: trough
+        default_pulse_ms: 45    
+        
+    
+    #led_flasher_1:
+    #    number: 3-0-5
+    #    allow_enable: true
+    #    default_hold_power: 0.2
+    #    default_pulse_ms: 5
+    #led_flasher_2:
+    #    number: 3-0-6
+    #    allow_enable: true
+    #    default_hold_power: 0.2
+    #    default_pulse_ms: 5
+        

@@ -1,0 +1,186 @@
+#config_version=5
+
+  #DIRECT SWITCHES
+  #switch numbers are labelled in silkscreen on the board
+switches:
+    s_left_drop1_target_1:
+        number: 0-0-1
+        type: NC
+                
+    s_left_drop1_target_2:
+        number: 0-0-2
+        type: NC
+                
+    s_left_drop1_target_3:
+        number: 0-0-3
+        type: NC
+                
+    s_left_drop2_target_1:
+        number: 0-0-8
+        type: NC
+                
+    s_left_drop2_target_2:
+        number: 0-0-9
+        type: NC
+                
+    s_left_drop2_target_3:
+        number: 0-0-10
+        type: NC
+                
+    s_trough_1:
+        number: 0-0-16
+        type: NC
+        tags: ball_1
+        
+    s_trough_jam:
+        number: 0-0-17
+        type: NC
+        tags: jam
+    s_right_sling_shot:
+        number: 0-0-18
+        tags: right_slingshot
+        ignore_window_ms: 250ms
+    s_left_sling_shot:
+        number: 0-0-19
+        tags: left_slingshot
+        ignore_window_ms: 250ms
+    s_left_pop_bumper:
+        number: 0-0-24
+        tags: jet, left_jet
+    s_right_pop_bumper:
+        number: 0-0-25
+        tags: jet, right_jet
+    s_lower_pop_bumper:
+        number: 0-0-26 
+        tags: jet, lower_jet        
+    s_left_flipper:
+        number: 1-0-1
+        tags: left_flipper
+    s_right_flipper:
+        number: 1-0-2
+        tags: right_flipper
+    s_right_flipper_upper:
+        number: 1-0-3
+        tags: right_flipper_upper
+        
+    s_ctr_drop_target_1:
+        number: 1-0-8
+        type: NC
+                
+    s_ctr_drop_target_2:
+        number: 1-0-9
+        type: NC
+                
+    s_ctr_drop_target_3:
+        number: 1-0-10
+        type: NC
+        
+        #MATRIX SWITCHES
+  #valid numbers are 1-0-32 through 1-0-95
+    
+    s_shooter_lane_eject:
+        number: 1-0-32
+        tags: plunger, player
+    s_trough_2:
+        number: 1-0-33
+        tags: ball_2
+    s_trough_3:
+        number: 1-0-34
+        tags: ball_3
+    s_trough_4:
+        number: 1-0-35
+        tags: ball_4
+    s_ro_right_lwr_out:
+        number: 1-0-36
+        tags: playfield_active, s_right_special, player_active        
+    s_ro_right_lwr_in:
+        number: 1-0-37
+        tags: playfield_active, s_right_bns_adv, player_active  
+        
+    s_left_flipper_eos:
+        number: 1-0-40
+        
+    s_right_flipper_eos:
+        number: 1-0-41  
+        
+    s_right_standup_target:
+        number: 1-0-42
+        tags: playfield_active, player_active
+    s_ro_upper_c:
+        number: 1-0-43
+        tags: playfield_active, player_active
+    s_standup_right_lwr:
+        number: 1-0-45
+        tags: playfield_active, player_active  
+    s_ro_left_lwr_out:
+        number: 1-0-48
+        tags: playfield_active, s_left_bns_adv, player_active                
+    s_right_upper_flipper_eos:
+        number: 1-0-49
+
+    s_right_star_1:
+        number: 1-0-50
+        tags: playfield_active, player_active, boat_lane
+    s_ro_upper_b:
+        number: 1-0-51
+        tags: playfield_active, player_active          
+    s_right_star_upper:
+        number: 1-0-52
+        tags: playfield_active, player_active, interstellar_lane          
+    s_standup_right_mid:
+        number: 1-0-53
+        tags: playfield_active, player_active          
+    s_ro_left_lwr_in:
+        number: 1-0-56
+        tags: playfield_active, s_left_bns_adv, player_active     
+    s_right_saucer:
+        number: 1-0-58
+           
+    s_ro_upper_a:
+        number: 1-0-59
+        tags: playfield_active, player_active          
+    s_left_star_1:
+        number: 1-0-64
+        tags: playfield_active, player_active, boat_lane
+    s_right_star_2:
+        number: 1-0-66
+        tags: playfield_active, player_active, boat_lane        
+    s_left_star_2:
+        number: 1-0-72
+        tags: playfield_active, player_active, boat_lane  
+    s_top_saucer:
+        number: 1-0-74
+        ignore_window_ms: 250ms    #tune to assist in debouncing   
+    s_left_star_3:
+        number: 1-0-80
+        tags: playfield_active, player_active, boat_lane        
+    s_spinner:
+        number: 1-0-88
+        tags: playfield_active, player_active          
+        
+    
+    
+    # ...    
+
+    s_topRollunder:
+        number: 1-0-95 
+        ignore_window_ms: 250ms    #tune to assist in debouncing
+        
+    #Sattilite Board V1.01
+    
+    
+    s_grn_drop_target_3x:
+        number: 3-0-1
+        tags: grn_lane_drops
+    s_grn_drop_target_plus1x:
+        number: 3-0-2
+        tags: grn_lane_drops
+    s_blu_drop_target_3x:
+        number: 3-0-8
+        tags: blu_lane_drops
+    s_blu_drop_target_plus1x:
+        number: 3-0-3
+        tags: blu_lane_drops
+    s_startbutton:
+        number: 3-0-9
+        tags: start, player, high_score_select
